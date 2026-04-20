@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "proNumber": {
+      "type": "string",
+      "description": "PRO number",
+      "example": "PRO-123456789"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current shipment status",
+      "enum": [
+        "BOOKED",
+        "PICKED_UP",
+        "IN_TRANSIT",
+        "OUT_FOR_DELIVERY",
+        "DELIVERED",
+        "EXCEPTION"
+      ],
+      "example": "IN_TRANSIT"
+    },
+    "lastLocation": {
+      "type": "string",
+      "description": "Last known location",
+      "example": "Kansas City, MO"
+    },
+    "estimatedDelivery": {
+      "type": "date",
+      "description": "Estimated delivery date",
+      "example": "2026-04-22"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {},
+          "description": {},
+          "location": {}
+        }
+      }
+    }
+  },
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-structure/arcbest-api-tracking-status-structure.json",
+  "name": "TrackingStatus"
+}

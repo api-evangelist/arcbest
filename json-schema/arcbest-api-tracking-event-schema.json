@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Event timestamp",
+      "example": "2026-04-19T08:00:00Z"
+    },
+    "description": {
+      "type": "string",
+      "description": "Event description",
+      "example": "Shipment picked up"
+    },
+    "location": {
+      "type": "string",
+      "description": "Event location",
+      "example": "Benton, AR"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-schema/arcbest-api-tracking-event-schema.json",
+  "title": "TrackingEvent"
+}

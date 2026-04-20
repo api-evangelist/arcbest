@@ -1,0 +1,185 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "arcbest": "https://api.arcbest.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ErrorResponse": "arcbest:ErrorResponse",
+    "message": {
+      "@id": "arcbest:message",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "arcbest:code",
+      "@type": "xsd:integer"
+    },
+    "Address": "arcbest:Address",
+    "name": {
+      "@id": "arcbest:name",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "arcbest:address",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "arcbest:city",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "arcbest:state",
+      "@type": "xsd:string"
+    },
+    "zip": {
+      "@id": "arcbest:zip",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "arcbest:country",
+      "@type": "xsd:string"
+    },
+    "FreightItem": "arcbest:FreightItem",
+    "weight": {
+      "@id": "arcbest:weight",
+      "@type": "xsd:decimal"
+    },
+    "freightClass": {
+      "@id": "arcbest:freightClass",
+      "@type": "xsd:string"
+    },
+    "pieces": {
+      "@id": "arcbest:pieces",
+      "@type": "xsd:integer"
+    },
+    "description": {
+      "@id": "arcbest:description",
+      "@type": "xsd:string"
+    },
+    "length": {
+      "@id": "arcbest:length",
+      "@type": "xsd:decimal"
+    },
+    "width": {
+      "@id": "arcbest:width",
+      "@type": "xsd:decimal"
+    },
+    "height": {
+      "@id": "arcbest:height",
+      "@type": "xsd:decimal"
+    },
+    "RateRequest": "arcbest:RateRequest",
+    "origin": {
+      "@id": "arcbest:origin",
+      "@type": "xsd:string"
+    },
+    "destination": {
+      "@id": "arcbest:destination",
+      "@type": "xsd:string"
+    },
+    "items": {
+      "@id": "arcbest:items",
+      "@type": "xsd:string"
+    },
+    "serviceType": {
+      "@id": "arcbest:serviceType",
+      "@type": "xsd:string"
+    },
+    "RateResponse": "arcbest:RateResponse",
+    "quoteNumber": {
+      "@id": "arcbest:quoteNumber",
+      "@type": "xsd:string"
+    },
+    "totalCharge": {
+      "@id": "arcbest:totalCharge",
+      "@type": "xsd:decimal"
+    },
+    "transitDays": {
+      "@id": "arcbest:transitDays",
+      "@type": "xsd:integer"
+    },
+    "serviceLevel": {
+      "@id": "arcbest:serviceLevel",
+      "@type": "xsd:string"
+    },
+    "expiresAt": {
+      "@id": "arcbest:expiresAt",
+      "@type": "xsd:dateTime"
+    },
+    "Shipment": "arcbest:Shipment",
+    "proNumber": {
+      "@id": "arcbest:proNumber",
+      "@type": "xsd:string"
+    },
+    "bolNumber": {
+      "@id": "arcbest:bolNumber",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "arcbest:status",
+      "@type": "xsd:string"
+    },
+    "ShipmentRequest": "arcbest:ShipmentRequest",
+    "shipper": {
+      "@id": "arcbest:shipper",
+      "@type": "xsd:string"
+    },
+    "consignee": {
+      "@id": "arcbest:consignee",
+      "@type": "xsd:string"
+    },
+    "referenceNumber": {
+      "@id": "arcbest:referenceNumber",
+      "@type": "xsd:string"
+    },
+    "ShipmentList": "arcbest:ShipmentList",
+    "shipments": {
+      "@id": "arcbest:shipments",
+      "@type": "xsd:string"
+    },
+    "totalCount": {
+      "@id": "arcbest:totalCount",
+      "@type": "xsd:integer"
+    },
+    "TrackingEvent": "arcbest:TrackingEvent",
+    "date": {
+      "@id": "arcbest:date",
+      "@type": "xsd:dateTime"
+    },
+    "location": {
+      "@id": "arcbest:location",
+      "@type": "xsd:string"
+    },
+    "TrackingStatus": "arcbest:TrackingStatus",
+    "lastLocation": {
+      "@id": "arcbest:lastLocation",
+      "@type": "xsd:string"
+    },
+    "estimatedDelivery": {
+      "@id": "arcbest:estimatedDelivery",
+      "@type": "xsd:date"
+    },
+    "events": {
+      "@id": "arcbest:events",
+      "@type": "xsd:string"
+    },
+    "PickupRequest": "arcbest:PickupRequest",
+    "pickupDate": {
+      "@id": "arcbest:pickupDate",
+      "@type": "xsd:date"
+    },
+    "readyTime": {
+      "@id": "arcbest:readyTime",
+      "@type": "xsd:string"
+    },
+    "closeTime": {
+      "@id": "arcbest:closeTime",
+      "@type": "xsd:string"
+    },
+    "PickupConfirmation": "arcbest:PickupConfirmation",
+    "confirmationNumber": {
+      "@id": "arcbest:confirmationNumber",
+      "@type": "xsd:string"
+    }
+  }
+}

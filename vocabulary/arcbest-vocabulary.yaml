@@ -1,0 +1,148 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: ArcBest
+  description: Vocabulary for the ArcBest freight and logistics API platform covering LTL rate quotes, shipment booking, tracking, and pickup scheduling.
+  created: '2026-04-19'
+  modified: '2026-04-19'
+
+operational:
+  apis:
+    - name: ArcBest API
+      namespace: arcbest-api
+      version: '2.0'
+      baseUrl: https://api.arcbest.com/v2
+      status: active
+
+  resources:
+    - name: rates
+      description: LTL freight rate quotes with transit time estimates
+      apis: [arcbest-api]
+      actions: [getLTLRate]
+    - name: shipments
+      description: Freight shipment bookings and BOL management
+      apis: [arcbest-api]
+      actions: [createShipment, listShipments]
+    - name: tracking
+      description: Real-time shipment tracking and event history
+      apis: [arcbest-api]
+      actions: [trackShipment]
+    - name: pickups
+      description: Freight pickup scheduling and confirmation
+      apis: [arcbest-api]
+      actions: [schedulePickup]
+
+  actions:
+    - name: getLTLRate
+      httpMethod: POST
+      pattern: query
+      description: Request an LTL freight rate quote
+    - name: createShipment
+      httpMethod: POST
+      pattern: write
+      description: Book a new freight shipment
+    - name: listShipments
+      httpMethod: GET
+      pattern: read
+      description: List shipments with filtering
+    - name: trackShipment
+      httpMethod: GET
+      pattern: read
+      description: Get tracking status for a shipment
+    - name: schedulePickup
+      httpMethod: POST
+      pattern: write
+      description: Schedule a freight pickup
+
+  schemas:
+    logistics:
+      - name: Shipment
+        description: Freight shipment with PRO number and status
+        properties: [proNumber, bolNumber, status, quoteNumber]
+      - name: TrackingStatus
+        description: Shipment tracking with location and event history
+        properties: [proNumber, status, lastLocation, estimatedDelivery, events]
+      - name: RateRequest
+        description: LTL rate quote request with origin, destination, and items
+        properties: [origin, destination, items, serviceType]
+      - name: RateResponse
+        description: LTL rate quote result with charges and transit time
+        properties: [quoteNumber, totalCharge, transitDays, serviceLevel, expiresAt]
+      - name: Address
+        description: Shipping address with location details
+        properties: [name, address, city, state, zip, country]
+      - name: FreightItem
+        description: Freight commodity with weight, class, and dimensions
+        properties: [weight, freightClass, pieces, description, length, width, height]
+
+  parameters:
+    filters:
+      - name: startDate
+        description: Start date for filtering shipments
+      - name: endDate
+        description: End date for filtering shipments
+      - name: status
+        description: Filter by shipment status
+    identifiers:
+      - name: proNumber
+        description: ArcBest PRO shipment number
+
+  enums:
+    shipment_status:
+      - BOOKED
+      - PICKED_UP
+      - IN_TRANSIT
+      - OUT_FOR_DELIVERY
+      - DELIVERED
+      - EXCEPTION
+    service_type:
+      - STANDARD
+      - EXPEDITED
+      - GUARANTEED
+    pickup_status:
+      - SCHEDULED
+      - CONFIRMED
+      - CANCELLED
+
+  authentication:
+    schemes:
+      - type: bearer
+        format: JWT
+        description: Bearer token from ArcBest authentication
+        usedBy: [ArcBest API]
+
+capability:
+  workflows: []
+  personas:
+    - id: logistics-manager
+      name: Logistics Manager
+      description: Manages freight shipments, rates, and carrier relationships
+    - id: warehouse-manager
+      name: Warehouse Manager
+      description: Coordinates outbound shipping and pickup scheduling
+    - id: erp-integrator
+      name: ERP Integrator
+      description: Integrates ArcBest freight data with business systems
+  domains:
+    - name: Freight Management
+      description: LTL and truckload freight booking and management
+    - name: Supply Chain Visibility
+      description: Real-time visibility into freight movement and delivery
+  namespaces:
+    - type: consumed
+      namespace: arcbest-api
+  binds: []
+
+crossReference:
+  - resource: rates
+    operations: [getLTLRate]
+    personas: [logistics-manager, erp-integrator]
+  - resource: shipments
+    operations: [createShipment, listShipments]
+    personas: [logistics-manager, warehouse-manager, erp-integrator]
+  - resource: tracking
+    operations: [trackShipment]
+    personas: [logistics-manager, warehouse-manager]
+  - resource: pickups
+    operations: [schedulePickup]
+    personas: [warehouse-manager]

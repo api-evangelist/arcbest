@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "confirmationNumber": {
+      "type": "string",
+      "description": "Pickup confirmation number",
+      "example": "PU-20260420-001"
+    },
+    "pickupDate": {
+      "type": "date",
+      "description": "Confirmed pickup date",
+      "example": "2026-04-20"
+    },
+    "status": {
+      "type": "string",
+      "description": "Pickup status",
+      "enum": [
+        "SCHEDULED",
+        "CONFIRMED",
+        "CANCELLED"
+      ],
+      "example": "SCHEDULED"
+    }
+  },
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-structure/arcbest-api-pickup-confirmation-structure.json",
+  "name": "PickupConfirmation"
+}

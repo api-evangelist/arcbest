@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "proNumber",
+    "pickupDate"
+  ],
+  "properties": {
+    "proNumber": {
+      "type": "string",
+      "description": "PRO number for the shipment",
+      "example": "PRO-123456789"
+    },
+    "pickupDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Requested pickup date",
+      "example": "2026-04-20"
+    },
+    "readyTime": {
+      "type": "string",
+      "description": "Time freight will be ready (HH:MM)",
+      "example": "09:00"
+    },
+    "closeTime": {
+      "type": "string",
+      "description": "Facility closing time (HH:MM)",
+      "example": "17:00"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-schema/arcbest-api-pickup-request-schema.json",
+  "title": "PickupRequest"
+}

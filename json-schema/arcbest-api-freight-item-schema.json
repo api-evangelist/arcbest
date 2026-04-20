@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "weight": {
+      "type": "number",
+      "description": "Weight in pounds",
+      "example": 500
+    },
+    "freightClass": {
+      "type": "string",
+      "description": "NMFC freight classification",
+      "example": "70"
+    },
+    "pieces": {
+      "type": "integer",
+      "description": "Number of pieces",
+      "example": 2
+    },
+    "description": {
+      "type": "string",
+      "description": "Commodity description",
+      "example": "Machine parts"
+    },
+    "length": {
+      "type": "number",
+      "description": "Length in inches",
+      "example": 48.0
+    },
+    "width": {
+      "type": "number",
+      "description": "Width in inches",
+      "example": 40.0
+    },
+    "height": {
+      "type": "number",
+      "description": "Height in inches",
+      "example": 36.0
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-schema/arcbest-api-freight-item-schema.json",
+  "title": "FreightItem"
+}

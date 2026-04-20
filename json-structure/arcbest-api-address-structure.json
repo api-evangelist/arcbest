@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Company or person name",
+      "example": "ACME Corp"
+    },
+    "address": {
+      "type": "string",
+      "description": "Street address",
+      "example": "123 Main St"
+    },
+    "city": {
+      "type": "string",
+      "description": "City",
+      "example": "Benton"
+    },
+    "state": {
+      "type": "string",
+      "description": "State abbreviation",
+      "example": "AR"
+    },
+    "zip": {
+      "type": "string",
+      "description": "ZIP code",
+      "example": "72015"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country code (ISO 3166-1 alpha-2)",
+      "example": "US"
+    }
+  },
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-structure/arcbest-api-address-structure.json",
+  "name": "Address"
+}

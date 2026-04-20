@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "quoteNumber": {
+      "type": "string",
+      "description": "Quote reference number",
+      "example": "Q-20260419-001"
+    },
+    "totalCharge": {
+      "type": "double",
+      "description": "Total freight charge in USD",
+      "example": 425.5
+    },
+    "transitDays": {
+      "type": "int32",
+      "description": "Estimated transit days",
+      "example": 3
+    },
+    "serviceLevel": {
+      "type": "string",
+      "description": "Service level",
+      "example": "STANDARD"
+    },
+    "expiresAt": {
+      "type": "datetime",
+      "description": "Quote expiration timestamp",
+      "example": "2026-04-26T23:59:59Z"
+    }
+  },
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-structure/arcbest-api-rate-response-structure.json",
+  "name": "RateResponse"
+}

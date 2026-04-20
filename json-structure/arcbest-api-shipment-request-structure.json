@@ -1,0 +1,107 @@
+{
+  "type": "object",
+  "required": [
+    "shipper",
+    "consignee"
+  ],
+  "properties": {
+    "quoteNumber": {
+      "type": "string",
+      "description": "Rate quote number to use for booking",
+      "example": "Q-20260419-001"
+    },
+    "shipper": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Company or person name",
+          "example": "ACME Corp"
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address",
+          "example": "123 Main St"
+        },
+        "city": {
+          "type": "string",
+          "description": "City",
+          "example": "Benton"
+        },
+        "state": {
+          "type": "string",
+          "description": "State abbreviation",
+          "example": "AR"
+        },
+        "zip": {
+          "type": "string",
+          "description": "ZIP code",
+          "example": "72015"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country code (ISO 3166-1 alpha-2)",
+          "example": "US"
+        }
+      }
+    },
+    "consignee": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Company or person name",
+          "example": "ACME Corp"
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address",
+          "example": "123 Main St"
+        },
+        "city": {
+          "type": "string",
+          "description": "City",
+          "example": "Benton"
+        },
+        "state": {
+          "type": "string",
+          "description": "State abbreviation",
+          "example": "AR"
+        },
+        "zip": {
+          "type": "string",
+          "description": "ZIP code",
+          "example": "72015"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country code (ISO 3166-1 alpha-2)",
+          "example": "US"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "weight": {},
+          "freightClass": {},
+          "pieces": {},
+          "description": {},
+          "length": {},
+          "width": {},
+          "height": {}
+        }
+      }
+    },
+    "referenceNumber": {
+      "type": "string",
+      "description": "Customer reference number",
+      "example": "PO-98765"
+    }
+  },
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-structure/arcbest-api-shipment-request-structure.json",
+  "name": "ShipmentRequest"
+}

@@ -1,0 +1,108 @@
+{
+  "type": "object",
+  "required": [
+    "origin",
+    "destination",
+    "items"
+  ],
+  "properties": {
+    "origin": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Company or person name",
+          "example": "ACME Corp"
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address",
+          "example": "123 Main St"
+        },
+        "city": {
+          "type": "string",
+          "description": "City",
+          "example": "Benton"
+        },
+        "state": {
+          "type": "string",
+          "description": "State abbreviation",
+          "example": "AR"
+        },
+        "zip": {
+          "type": "string",
+          "description": "ZIP code",
+          "example": "72015"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country code (ISO 3166-1 alpha-2)",
+          "example": "US"
+        }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Company or person name",
+          "example": "ACME Corp"
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address",
+          "example": "123 Main St"
+        },
+        "city": {
+          "type": "string",
+          "description": "City",
+          "example": "Benton"
+        },
+        "state": {
+          "type": "string",
+          "description": "State abbreviation",
+          "example": "AR"
+        },
+        "zip": {
+          "type": "string",
+          "description": "ZIP code",
+          "example": "72015"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country code (ISO 3166-1 alpha-2)",
+          "example": "US"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "weight": {},
+          "freightClass": {},
+          "pieces": {},
+          "description": {},
+          "length": {},
+          "width": {},
+          "height": {}
+        }
+      }
+    },
+    "serviceType": {
+      "type": "string",
+      "description": "Requested service type",
+      "enum": [
+        "STANDARD",
+        "EXPEDITED",
+        "GUARANTEED"
+      ],
+      "example": "STANDARD"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-schema/arcbest-api-rate-request-schema.json",
+  "title": "RateRequest"
+}

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "shipments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "proNumber": {},
+          "bolNumber": {},
+          "status": {},
+          "quoteNumber": {}
+        }
+      }
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "Total number of shipments",
+      "example": 25
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/json-schema/arcbest-api-shipment-list-schema.json",
+  "title": "ShipmentList"
+}

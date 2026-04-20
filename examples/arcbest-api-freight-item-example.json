@@ -1,0 +1,9 @@
+{
+  "weight": 500,
+  "freightClass": "70",
+  "pieces": 2,
+  "description": "Machine parts",
+  "length": 48.0,
+  "width": 40.0,
+  "height": 36.0
+}
