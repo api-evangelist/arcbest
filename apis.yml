@@ -33,6 +33,8 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/openapi/arcbest-api.yaml
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/arcbest
 - type: Portal
   url: https://www.arcbest.com/
 - type: SignUp
