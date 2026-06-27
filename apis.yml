@@ -37,7 +37,7 @@ common:
     url: https://www.linkedin.com/company/arcbest
   - type: Portal
     url: https://www.arcbest.com/
-  - type: SignUp
+  - type: Signup
     url: https://www.arcbest.com/
   - type: Features
     data:
