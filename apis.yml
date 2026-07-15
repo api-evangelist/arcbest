@@ -33,6 +33,8 @@ apis:
     - type: OpenAPI
       url: https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/openapi/arcbest-api.yaml
 common:
+  - type: AgenticAccess
+    url: agentic-access/arcbest-agentic-access.yml
   - type: DomainSecurity
     url: security/arcbest-domain-security.yml
   - type: Authentication
