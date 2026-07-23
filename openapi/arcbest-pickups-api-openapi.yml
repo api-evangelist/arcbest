@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: ArcBest Pickups API
+  description: The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access to the API is by invitation only.
+  version: '2.0'
+  x-generated-from: documentation
+  contact:
+    name: ArcBest
+    url: https://www.arcbest.com/
+servers:
+- url: https://api.arcbest.com/v2
+  description: ArcBest API Production
+security:
+- bearerAuth: []
+tags:
+- name: Pickups
+  description: Pickup scheduling and management
+paths:
+  /pickups:
+    post:
+      operationId: schedulePickup
+      summary: ArcBest Schedule Pickup
+      description: Schedule a freight pickup for a booked shipment.
+      tags:
+      - Pickups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PickupRequest'
+            examples:
+              SchedulePickupRequestExample:
+                summary: Default schedulePickup request
+                x-microcks-default: true
+                value:
+                  proNumber: PRO-123456789
+                  pickupDate: '2026-04-20'
+                  readyTime: 09:00
+                  closeTime: '17:00'
+      responses:
+        '200':
+          description: Pickup scheduled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupConfirmation'
+              examples:
+                SchedulePickup200Example:
+                  summary: Default schedulePickup 200 response
+                  x-microcks-default: true
+                  value:
+                    confirmationNumber: PU-20260420-001
+                    pickupDate: '2026-04-20'
+                    status: SCHEDULED
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    PickupConfirmation:
+      type: object
+      properties:
+        confirmationNumber:
+          type: string
+          description: Pickup confirmation number
+          example: PU-20260420-001
+        pickupDate:
+          type: string
+          format: date
+          description: Confirmed pickup date
+          example: '2026-04-20'
+        status:
+          type: string
+          description: Pickup status
+          enum:
+          - SCHEDULED
+          - CONFIRMED
+          - CANCELLED
+          example: SCHEDULED
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
+    PickupRequest:
+      type: object
+      required:
+      - proNumber
+      - pickupDate
+      properties:
+        proNumber:
+          type: string
+          description: PRO number for the shipment
+          example: PRO-123456789
+        pickupDate:
+          type: string
+          format: date
+          description: Requested pickup date
+          example: '2026-04-20'
+        readyTime:
+          type: string
+          description: Time freight will be ready (HH:MM)
+          example: 09:00
+        closeTime:
+          type: string
+          description: Facility closing time (HH:MM)
+          example: '17:00'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer token obtained from ArcBest API authentication

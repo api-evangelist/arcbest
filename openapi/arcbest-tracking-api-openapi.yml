@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: ArcBest Pickups Tracking API
+  description: The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access to the API is by invitation only.
+  version: '2.0'
+  x-generated-from: documentation
+  contact:
+    name: ArcBest
+    url: https://www.arcbest.com/
+servers:
+- url: https://api.arcbest.com/v2
+  description: ArcBest API Production
+security:
+- bearerAuth: []
+tags:
+- name: Tracking
+  description: Shipment tracking and visibility
+paths:
+  /tracking/{proNumber}:
+    get:
+      operationId: trackShipment
+      summary: ArcBest Track Shipment
+      description: Get real-time tracking status for a shipment by PRO number.
+      tags:
+      - Tracking
+      parameters:
+      - name: proNumber
+        in: path
+        required: true
+        description: Shipment PRO number
+        schema:
+          type: string
+        example: PRO-123456789
+      responses:
+        '200':
+          description: Tracking status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingStatus'
+              examples:
+                TrackShipment200Example:
+                  summary: Default trackShipment 200 response
+                  x-microcks-default: true
+                  value:
+                    proNumber: PRO-123456789
+                    status: IN_TRANSIT
+                    lastLocation: Kansas City, MO
+                    estimatedDelivery: '2026-04-22'
+                    events:
+                    - date: '2026-04-19T08:00:00Z'
+                      description: Shipment picked up
+                      location: Benton, AR
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    TrackingStatus:
+      type: object
+      properties:
+        proNumber:
+          type: string
+          description: PRO number
+          example: PRO-123456789
+        status:
+          type: string
+          description: Current shipment status
+          enum:
+          - BOOKED
+          - PICKED_UP
+          - IN_TRANSIT
+          - OUT_FOR_DELIVERY
+          - DELIVERED
+          - EXCEPTION
+          example: IN_TRANSIT
+        lastLocation:
+          type: string
+          description: Last known location
+          example: Kansas City, MO
+        estimatedDelivery:
+          type: string
+          format: date
+          description: Estimated delivery date
+          example: '2026-04-22'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingEvent'
+    TrackingEvent:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Event timestamp
+          example: '2026-04-19T08:00:00Z'
+        description:
+          type: string
+          description: Event description
+          example: Shipment picked up
+        location:
+          type: string
+          description: Event location
+          example: Benton, AR
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer token obtained from ArcBest API authentication
