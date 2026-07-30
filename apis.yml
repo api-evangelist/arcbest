@@ -3,7 +3,20 @@ name: ArcBest
 description: ArcBest is a logistics company offering less-than-truckload (LTL) freight, truckload, moving, and supply chain management services. The ArcBest API platform provides integration 
   capabilities for freight rating, booking, tracking, and supply chain visibility.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
 tags:
   - Logistics
   - Freight
@@ -16,22 +29,50 @@ created: '2026-03-23'
 modified: '2026-04-19'
 specificationVersion: '0.19'
 apis:
-  - aid: arcbest:arcbest-api
-    name: ArcBest API
-    description: The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access is by 
-      invitation only.
-    humanURL: https://www.arcbest.com/
-    tags:
-    - LTL Freight
-    - Rate Quote
-    - Shipment Tracking
-    - BOL
-    - Supply Chain
-    properties:
-    - type: Documentation
-      url: https://www.arcbest.com/
-    - type: OpenAPI
-      url: https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/openapi/arcbest-api.yaml
+- aid: arcbest:arcbest-pickups-api
+  name: ArcBest Pickups API
+  description: Pickup scheduling and management
+  humanURL: https://www.arcbest.com/
+  tags:
+  - Pickups
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-pickups-api-openapi.yml
+  - type: Documentation
+    url: https://www.arcbest.com/
+- aid: arcbest:arcbest-rates-api
+  name: ArcBest Rates API
+  description: Freight rate quote services
+  humanURL: https://www.arcbest.com/
+  tags:
+  - Rates
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-rates-api-openapi.yml
+  - type: Documentation
+    url: https://www.arcbest.com/
+- aid: arcbest:arcbest-shipments-api
+  name: ArcBest Shipments API
+  description: Shipment booking and management
+  humanURL: https://www.arcbest.com/
+  tags:
+  - Shipments
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-shipments-api-openapi.yml
+  - type: Documentation
+    url: https://www.arcbest.com/
+- aid: arcbest:arcbest-tracking-api
+  name: ArcBest Tracking API
+  description: Shipment tracking and visibility
+  humanURL: https://www.arcbest.com/
+  tags:
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://www.arcbest.com/
 common:
   - type: AgenticAccess
     url: agentic-access/arcbest-agentic-access.yml
