@@ -1,0 +1,556 @@
+openapi: 3.0.3
+info:
+  title: ArcBest API
+  description: >-
+    The ArcBest API provides programmatic access to freight services including LTL
+    rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility.
+    Access to the API is by invitation only.
+  version: "2.0"
+  x-generated-from: documentation
+  contact:
+    name: ArcBest
+    url: https://www.arcbest.com/
+servers:
+  - url: https://api.arcbest.com/v2
+    description: ArcBest API Production
+tags:
+  - name: Rates
+    description: Freight rate quote services
+  - name: Shipments
+    description: Shipment booking and management
+  - name: Tracking
+    description: Shipment tracking and visibility
+  - name: Pickups
+    description: Pickup scheduling and management
+paths:
+  /rates/ltl:
+    post:
+      operationId: getLTLRate
+      summary: ArcBest Get LTL Rate Quote
+      description: Request a real-time LTL freight rate quote with transit time estimate.
+      tags:
+        - Rates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateRequest'
+            examples:
+              GetLTLRateRequestExample:
+                summary: Default getLTLRate request
+                x-microcks-default: true
+                value:
+                  origin:
+                    zip: "72015"
+                    country: US
+                  destination:
+                    zip: "90210"
+                    country: US
+                  items:
+                    - weight: 500
+                      freightClass: "70"
+                      pieces: 2
+      responses:
+        '200':
+          description: Rate quote result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateResponse'
+              examples:
+                GetLTLRate200Example:
+                  summary: Default getLTLRate 200 response
+                  x-microcks-default: true
+                  value:
+                    quoteNumber: "Q-20260419-001"
+                    totalCharge: 425.50
+                    transitDays: 3
+                    serviceLevel: STANDARD
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /shipments:
+    post:
+      operationId: createShipment
+      summary: ArcBest Create Shipment
+      description: Book a new LTL freight shipment and generate a Bill of Lading.
+      tags:
+        - Shipments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentRequest'
+            examples:
+              CreateShipmentRequestExample:
+                summary: Default createShipment request
+                x-microcks-default: true
+                value:
+                  quoteNumber: "Q-20260419-001"
+                  shipper:
+                    name: "ACME Corp"
+                    address: "123 Main St"
+                    city: "Benton"
+                    state: "AR"
+                    zip: "72015"
+                  consignee:
+                    name: "Widget Inc"
+                    address: "456 Oak Ave"
+                    city: "Beverly Hills"
+                    state: "CA"
+                    zip: "90210"
+      responses:
+        '200':
+          description: Shipment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+              examples:
+                CreateShipment200Example:
+                  summary: Default createShipment 200 response
+                  x-microcks-default: true
+                  value:
+                    proNumber: "PRO-123456789"
+                    bolNumber: "BOL-20260419-001"
+                    status: BOOKED
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listShipments
+      summary: ArcBest List Shipments
+      description: List shipments with optional filtering by date range and status.
+      tags:
+        - Shipments
+      parameters:
+        - name: startDate
+          in: query
+          description: Start date filter (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+          example: "2026-04-01"
+        - name: endDate
+          in: query
+          description: End date filter (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+          example: "2026-04-19"
+        - name: status
+          in: query
+          description: Filter by shipment status
+          schema:
+            type: string
+            enum: [BOOKED, IN_TRANSIT, DELIVERED, EXCEPTION]
+          example: IN_TRANSIT
+      responses:
+        '200':
+          description: List of shipments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentList'
+              examples:
+                ListShipments200Example:
+                  summary: Default listShipments 200 response
+                  x-microcks-default: true
+                  value:
+                    shipments:
+                      - proNumber: "PRO-123456789"
+                        status: IN_TRANSIT
+                        origin: "Benton, AR"
+                        destination: "Beverly Hills, CA"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /tracking/{proNumber}:
+    get:
+      operationId: trackShipment
+      summary: ArcBest Track Shipment
+      description: Get real-time tracking status for a shipment by PRO number.
+      tags:
+        - Tracking
+      parameters:
+        - name: proNumber
+          in: path
+          required: true
+          description: Shipment PRO number
+          schema:
+            type: string
+          example: "PRO-123456789"
+      responses:
+        '200':
+          description: Tracking status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingStatus'
+              examples:
+                TrackShipment200Example:
+                  summary: Default trackShipment 200 response
+                  x-microcks-default: true
+                  value:
+                    proNumber: "PRO-123456789"
+                    status: IN_TRANSIT
+                    lastLocation: "Kansas City, MO"
+                    estimatedDelivery: "2026-04-22"
+                    events:
+                      - date: "2026-04-19T08:00:00Z"
+                        description: "Shipment picked up"
+                        location: "Benton, AR"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Shipment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /pickups:
+    post:
+      operationId: schedulePickup
+      summary: ArcBest Schedule Pickup
+      description: Schedule a freight pickup for a booked shipment.
+      tags:
+        - Pickups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PickupRequest'
+            examples:
+              SchedulePickupRequestExample:
+                summary: Default schedulePickup request
+                x-microcks-default: true
+                value:
+                  proNumber: "PRO-123456789"
+                  pickupDate: "2026-04-20"
+                  readyTime: "09:00"
+                  closeTime: "17:00"
+      responses:
+        '200':
+          description: Pickup scheduled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupConfirmation'
+              examples:
+                SchedulePickup200Example:
+                  summary: Default schedulePickup 200 response
+                  x-microcks-default: true
+                  value:
+                    confirmationNumber: "PU-20260420-001"
+                    pickupDate: "2026-04-20"
+                    status: SCHEDULED
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer token obtained from ArcBest API authentication
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
+    Address:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Company or person name
+          example: ACME Corp
+        address:
+          type: string
+          description: Street address
+          example: 123 Main St
+        city:
+          type: string
+          description: City
+          example: Benton
+        state:
+          type: string
+          description: State abbreviation
+          example: AR
+        zip:
+          type: string
+          description: ZIP code
+          example: "72015"
+        country:
+          type: string
+          description: Country code (ISO 3166-1 alpha-2)
+          example: US
+    FreightItem:
+      type: object
+      properties:
+        weight:
+          type: number
+          description: Weight in pounds
+          example: 500
+        freightClass:
+          type: string
+          description: NMFC freight classification
+          example: "70"
+        pieces:
+          type: integer
+          description: Number of pieces
+          example: 2
+        description:
+          type: string
+          description: Commodity description
+          example: Machine parts
+        length:
+          type: number
+          description: Length in inches
+          example: 48.0
+        width:
+          type: number
+          description: Width in inches
+          example: 40.0
+        height:
+          type: number
+          description: Height in inches
+          example: 36.0
+    RateRequest:
+      type: object
+      required:
+        - origin
+        - destination
+        - items
+      properties:
+        origin:
+          $ref: '#/components/schemas/Address'
+        destination:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreightItem'
+        serviceType:
+          type: string
+          description: Requested service type
+          enum: [STANDARD, EXPEDITED, GUARANTEED]
+          example: STANDARD
+    RateResponse:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: Quote reference number
+          example: Q-20260419-001
+        totalCharge:
+          type: number
+          description: Total freight charge in USD
+          example: 425.50
+        transitDays:
+          type: integer
+          description: Estimated transit days
+          example: 3
+        serviceLevel:
+          type: string
+          description: Service level
+          example: STANDARD
+        expiresAt:
+          type: string
+          format: date-time
+          description: Quote expiration timestamp
+          example: "2026-04-26T23:59:59Z"
+    Shipment:
+      type: object
+      properties:
+        proNumber:
+          type: string
+          description: ArcBest PRO (shipment) number
+          example: PRO-123456789
+        bolNumber:
+          type: string
+          description: Bill of Lading number
+          example: BOL-20260419-001
+        status:
+          type: string
+          description: Shipment status
+          enum: [BOOKED, PICKED_UP, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERED, EXCEPTION]
+          example: BOOKED
+        quoteNumber:
+          type: string
+          description: Rate quote number used for booking
+          example: Q-20260419-001
+    ShipmentRequest:
+      type: object
+      required:
+        - shipper
+        - consignee
+      properties:
+        quoteNumber:
+          type: string
+          description: Rate quote number to use for booking
+          example: Q-20260419-001
+        shipper:
+          $ref: '#/components/schemas/Address'
+        consignee:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreightItem'
+        referenceNumber:
+          type: string
+          description: Customer reference number
+          example: PO-98765
+    ShipmentList:
+      type: object
+      properties:
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shipment'
+        totalCount:
+          type: integer
+          description: Total number of shipments
+          example: 25
+    TrackingEvent:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Event timestamp
+          example: "2026-04-19T08:00:00Z"
+        description:
+          type: string
+          description: Event description
+          example: Shipment picked up
+        location:
+          type: string
+          description: Event location
+          example: Benton, AR
+    TrackingStatus:
+      type: object
+      properties:
+        proNumber:
+          type: string
+          description: PRO number
+          example: PRO-123456789
+        status:
+          type: string
+          description: Current shipment status
+          enum: [BOOKED, PICKED_UP, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERED, EXCEPTION]
+          example: IN_TRANSIT
+        lastLocation:
+          type: string
+          description: Last known location
+          example: Kansas City, MO
+        estimatedDelivery:
+          type: string
+          format: date
+          description: Estimated delivery date
+          example: "2026-04-22"
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingEvent'
+    PickupRequest:
+      type: object
+      required:
+        - proNumber
+        - pickupDate
+      properties:
+        proNumber:
+          type: string
+          description: PRO number for the shipment
+          example: PRO-123456789
+        pickupDate:
+          type: string
+          format: date
+          description: Requested pickup date
+          example: "2026-04-20"
+        readyTime:
+          type: string
+          description: Time freight will be ready (HH:MM)
+          example: "09:00"
+        closeTime:
+          type: string
+          description: Facility closing time (HH:MM)
+          example: "17:00"
+    PickupConfirmation:
+      type: object
+      properties:
+        confirmationNumber:
+          type: string
+          description: Pickup confirmation number
+          example: PU-20260420-001
+        pickupDate:
+          type: string
+          format: date
+          description: Confirmed pickup date
+          example: "2026-04-20"
+        status:
+          type: string
+          description: Pickup status
+          enum: [SCHEDULED, CONFIRMED, CANCELLED]
+          example: SCHEDULED
+security:
+  - bearerAuth: []

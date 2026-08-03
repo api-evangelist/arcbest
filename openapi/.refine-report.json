@@ -1,0 +1,20 @@
+{
+  "provider": "arcbest",
+  "sources": [
+    "arcbest-pickups-api-openapi.yml",
+    "arcbest-rates-api-openapi.yml",
+    "arcbest-shipments-api-openapi.yml",
+    "arcbest-tracking-api-openapi.yml"
+  ],
+  "outputs": [
+    "arcbest-pickups-api-openapi.yml",
+    "arcbest-rates-api-openapi.yml",
+    "arcbest-shipments-api-openapi.yml",
+    "arcbest-tracking-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
