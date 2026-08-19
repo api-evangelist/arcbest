@@ -1,0 +1,202 @@
+{
+  "item": [
+    {
+      "id": "a242e6f5-c231-42ca-b2ef-7e9c3d2b6911",
+      "name": "Rates",
+      "description": {
+        "content": "Freight rate quote services",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e9db1e2d-2fef-46ce-8d3b-ee0c7c9adc81",
+          "name": "ArcBest Get LTL Rate Quote",
+          "request": {
+            "name": "ArcBest Get LTL Rate Quote",
+            "description": {
+              "content": "Request a real-time LTL freight rate quote with transit time estimate.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rates",
+                "ltl"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"destination\": {\n    \"name\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"items\": [\n    {\n      \"weight\": \"<number>\",\n      \"freightClass\": \"<string>\",\n      \"pieces\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"length\": \"<number>\",\n      \"width\": \"<number>\",\n      \"height\": \"<number>\"\n    },\n    {\n      \"weight\": \"<number>\",\n      \"freightClass\": \"<string>\",\n      \"pieces\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"length\": \"<number>\",\n      \"width\": \"<number>\",\n      \"height\": \"<number>\"\n    }\n  ],\n  \"serviceType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "daef4ba2-ef0a-43bd-a563-1fe2106f4feb",
+              "name": "Rate quote result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rates",
+                    "ltl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"origin\": {\n    \"zip\": \"72015\",\n    \"country\": \"US\"\n  },\n  \"destination\": {\n    \"zip\": \"90210\",\n    \"country\": \"US\"\n  },\n  \"items\": [\n    {\n      \"weight\": 500,\n      \"freightClass\": \"70\",\n      \"pieces\": 2\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quoteNumber\": \"Q-20260419-001\",\n  \"totalCharge\": 425.5,\n  \"transitDays\": 3,\n  \"serviceLevel\": \"STANDARD\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab9c0843-c6e5-4a31-821f-512a5b1a0b9c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rates",
+                    "ltl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"origin\": {\n    \"zip\": \"72015\",\n    \"country\": \"US\"\n  },\n  \"destination\": {\n    \"zip\": \"90210\",\n    \"country\": \"US\"\n  },\n  \"items\": [\n    {\n      \"weight\": 500,\n      \"freightClass\": \"70\",\n      \"pieces\": 2\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized access\",\n  \"code\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.arcbest.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "172f37e5-f814-4e58-8b0e-c0d45aa9fee5",
+    "name": "ArcBest Pickups Rates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access to the API is by invitation only.\n\nContact Support:\n Name: ArcBest",
+      "type": "text/plain"
+    }
+  }
+}

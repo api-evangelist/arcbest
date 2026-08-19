@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArcBest Pickups API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pickups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ArcBest Schedule Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.arcbest.com/v2/pickups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Schedule a freight pickup for a booked shipment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,199 @@
+{
+  "item": [
+    {
+      "id": "9e1cd835-4fcd-4e2c-8485-baa465f5cb25",
+      "name": "Pickups",
+      "description": {
+        "content": "Pickup scheduling and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f668d7ff-68e4-48b8-ba61-066c9c5e2bfa",
+          "name": "ArcBest Schedule Pickup",
+          "request": {
+            "name": "ArcBest Schedule Pickup",
+            "description": {
+              "content": "Schedule a freight pickup for a booked shipment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proNumber\": \"<string>\",\n  \"pickupDate\": \"<date>\",\n  \"readyTime\": \"<string>\",\n  \"closeTime\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "443fdbaf-0eef-4560-b021-56fd92c17685",
+              "name": "Pickup scheduled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"proNumber\": \"PRO-123456789\",\n  \"pickupDate\": \"2026-04-20\",\n  \"readyTime\": \"09:00\",\n  \"closeTime\": \"17:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"confirmationNumber\": \"PU-20260420-001\",\n  \"pickupDate\": \"2026-04-20\",\n  \"status\": \"SCHEDULED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2e08eb2-e0e5-4746-97e4-dac1bdb55de1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"proNumber\": \"PRO-123456789\",\n  \"pickupDate\": \"2026-04-20\",\n  \"readyTime\": \"09:00\",\n  \"closeTime\": \"17:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized access\",\n  \"code\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.arcbest.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4166c789-98b1-4f28-b368-7d4059cc1be4",
+    "name": "ArcBest Pickups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access to the API is by invitation only.\n\nContact Support:\n Name: ArcBest",
+      "type": "text/plain"
+    }
+  }
+}

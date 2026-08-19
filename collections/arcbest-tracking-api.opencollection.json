@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArcBest Pickups Tracking API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ArcBest Track Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.arcbest.com/v2/tracking/:proNumber",
+            "params": [
+              {
+                "name": "proNumber",
+                "value": "PRO-123456789",
+                "type": "path",
+                "description": "Shipment PRO number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get real-time tracking status for a shipment by PRO number."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
