@@ -15,6 +15,12 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "arcbest-pickups-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "arcbest-rates-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "arcbest-shipments-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "arcbest-tracking-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

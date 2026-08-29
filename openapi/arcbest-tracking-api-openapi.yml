@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: ArcBest Pickups Tracking API
   description: The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access to the API is by invitation only.
@@ -70,6 +70,17 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
     TrackingStatus:
       type: object
       properties:
@@ -117,17 +128,6 @@ components:
           type: string
           description: Event location
           example: Benton, AR
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
   securitySchemes:
     bearerAuth:
       type: http

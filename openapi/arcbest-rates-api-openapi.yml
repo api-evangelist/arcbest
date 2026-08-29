@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: ArcBest Pickups Rates API
   description: The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access to the API is by invitation only.
@@ -73,6 +73,29 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    RateRequest:
+      type: object
+      required:
+      - origin
+      - destination
+      - items
+      properties:
+        origin:
+          $ref: '#/components/schemas/Address'
+        destination:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreightItem'
+        serviceType:
+          type: string
+          description: Requested service type
+          enum:
+          - STANDARD
+          - EXPEDITED
+          - GUARANTEED
+          example: STANDARD
     Address:
       type: object
       properties:
@@ -100,64 +123,6 @@ components:
           type: string
           description: Country code (ISO 3166-1 alpha-2)
           example: US
-    RateResponse:
-      type: object
-      properties:
-        quoteNumber:
-          type: string
-          description: Quote reference number
-          example: Q-20260419-001
-        totalCharge:
-          type: number
-          description: Total freight charge in USD
-          example: 425.5
-        transitDays:
-          type: integer
-          description: Estimated transit days
-          example: 3
-        serviceLevel:
-          type: string
-          description: Service level
-          example: STANDARD
-        expiresAt:
-          type: string
-          format: date-time
-          description: Quote expiration timestamp
-          example: '2026-04-26T23:59:59Z'
-    RateRequest:
-      type: object
-      required:
-      - origin
-      - destination
-      - items
-      properties:
-        origin:
-          $ref: '#/components/schemas/Address'
-        destination:
-          $ref: '#/components/schemas/Address'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FreightItem'
-        serviceType:
-          type: string
-          description: Requested service type
-          enum:
-          - STANDARD
-          - EXPEDITED
-          - GUARANTEED
-          example: STANDARD
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
     FreightItem:
       type: object
       properties:
@@ -189,6 +154,41 @@ components:
           type: number
           description: Height in inches
           example: 36.0
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
+    RateResponse:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: Quote reference number
+          example: Q-20260419-001
+        totalCharge:
+          type: number
+          description: Total freight charge in USD
+          example: 425.5
+        transitDays:
+          type: integer
+          description: Estimated transit days
+          example: 3
+        serviceLevel:
+          type: string
+          description: Service level
+          example: STANDARD
+        expiresAt:
+          type: string
+          format: date-time
+          description: Quote expiration timestamp
+          example: '2026-04-26T23:59:59Z'
   securitySchemes:
     bearerAuth:
       type: http
