@@ -1,0 +1,244 @@
+[
+  {
+    "Shipment": {
+      "ProNumber": "string",
+      "ProductType": "string",
+      "ServiceLevel": "string",
+      "CustomerNo": "string",
+      "OrderDate": "2023-04-17T14:47:42.602Z",
+      "TimeZone": "string",
+      "ContactName": "string",
+      "Phone": "string",
+      "ShouldShowMap": true,
+      "TransportMode": 0,
+      "Shipper": {
+        "Account": "string",
+        "CompanyName": "string",
+        "CompanyNamePlus": "string",
+        "RulesCircularType": "string",
+        "RulesCircularHtml": "string",
+        "Location": {
+          "Name": "string",
+          "Attention": "string",
+          "Line1": "string",
+          "Line2": "string",
+          "Line3": "string",
+          "City": "string",
+          "State": "string",
+          "PostalCode": "string",
+          "Country": "string"
+        }
+      },
+      "Consignee": {
+        "Account": "string",
+        "CompanyName": "string",
+        "CompanyNamePlus": "string",
+        "RulesCircularType": "string",
+        "RulesCircularHtml": "string",
+        "Location": {
+          "Name": "string",
+          "Attention": "string",
+          "Line1": "string",
+          "Line2": "string",
+          "Line3": "string",
+          "City": "string",
+          "State": "string",
+          "PostalCode": "string",
+          "Country": "string"
+        }
+      },
+      "ThirdParty": {
+        "Account": "string",
+        "CompanyName": "string",
+        "CompanyNamePlus": "string",
+        "RulesCircularType": "string",
+        "RulesCircularHtml": "string",
+        "Location": {
+          "Name": "string",
+          "Attention": "string",
+          "Line1": "string",
+          "Line2": "string",
+          "Line3": "string",
+          "City": "string",
+          "State": "string",
+          "PostalCode": "string",
+          "Country": "string"
+        }
+      },
+      "ReferenceNumbers": {
+        "TrailerNumber": "string",
+        "BillOfLadingNumbers": [
+          "string"
+        ],
+        "CustomerReferenceNumbers": [
+          "string"
+        ],
+        "PurchaseOrderNumbers": [
+          {
+            "Number": "string",
+            "NumberOfPieces": 0,
+            "Weight": 0
+          }
+        ]
+      },
+      "Billing": {
+        "AuthorizationNo": "string",
+        "PaymentMethod": "string",
+        "OpenAmount": 0,
+        "PendingAmount": 0,
+        "FuelSurchargeAmount": 0,
+        "AccessorialChargeAmount": 0,
+        "GrossAmount": 0,
+        "Charges": 0
+      },
+      "Status": {
+        "Code": 0,
+        "CodeDescription": "string",
+        "Description": "string",
+        "ActualEventDate": "2023-04-17T14:47:42.602Z",
+        "TimeZoneActualEventDate": "string",
+        "IsDryRun": true,
+        "IsDelayed": true,
+        "VoyageInformation": "string",
+        "ProofOfDelivery": "string",
+        "EstimatedPickup": "2023-04-17T14:47:42.602Z",
+        "TimeZoneEstimatedPickup": "string",
+        "EstimatedDelivery": "2023-04-17T14:47:42.602Z",
+        "TimeZoneEstimatedDelivery": "string",
+        "ActualPickup": "2023-04-17T14:47:42.602Z",
+        "TimeZoneActualPickup": "string",
+        "ActualDelivery": "2023-04-17T14:47:42.602Z",
+        "TimeZoneActualDelivery": "string",
+        "CurrentEta": "string",
+        "CurrentEtaMiles": "string",
+        "CurrentLatitude": 0,
+        "CurrentLongitude": 0,
+        "ShipmentPaid": true
+      },
+      "Freight": {
+        "Weight": 0,
+        "PackageCount": 0,
+        "PiecesCount": 0,
+        "Cube": 0,
+        "CubeUnitOfMeasure": "string",
+        "TruckTypeDesc": "string",
+        "TruckType": "string",
+        "DimLength": 0,
+        "DimWidth": 0,
+        "DimHeight": 0
+      },
+      "TemperatureControl": {
+        "Validated": true,
+        "TemperatureSetPoint": 0,
+        "MaxTemperature": 0,
+        "MinTemperature": 0,
+        "TruckType": "string",
+        "TruckTypeDesc": "string"
+      }
+    },
+    "StopOffs": [
+      {
+        "SeqNum": "string",
+        "StopOffCode": "string",
+        "StopOffCodeDesc": "string",
+        "Location": {
+          "Name": "string",
+          "Attention": "string",
+          "Line1": "string",
+          "Line2": "string",
+          "Line3": "string",
+          "City": "string",
+          "State": "string",
+          "PostalCode": "string",
+          "Country": "string"
+        },
+        "Pieces": 0,
+        "Weight": 0,
+        "ScheduledInDateTime": "2023-04-17T14:47:42.602Z",
+        "TimeZoneScheduledInDateTime": "string",
+        "ScheduledOutDateTime": "2023-04-17T14:47:42.602Z",
+        "TimeZoneScheduledOutDateTime": "string",
+        "ActualInDateTime": "2023-04-17T14:47:42.602Z",
+        "TimeZoneActualInDateTime": "string",
+        "ActualOutDateTime": "2023-04-17T14:47:42.602Z",
+        "TimeZoneActualOutDateTime": "string",
+        "RequestedDateTime": "2023-04-17T14:47:42.602Z",
+        "TimeZoneRequestedDateTime": "string",
+        "Miles": 0
+      }
+    ],
+    "Milestones": [
+      {
+        "ActualEventDate": "2023-04-17T14:47:42.602Z",
+        "TimeZoneActualEventDate": "string",
+        "PlannedEventDate": "2023-04-17T14:47:42.602Z",
+        "TimeZonePlannedEventDate": "string",
+        "StatusCode": "string",
+        "StatusLongName": "string",
+        "StatusType": "string",
+        "ServiceProviderName": "string",
+        "ShipUnitCount": "string",
+        "ActualWeight": 0,
+        "WeightUom": "string",
+        "SignedName": "string",
+        "Comments": "string",
+        "ShipmentDescriptionCode": "string",
+        "FccopReceivedAmount": 0,
+        "FccopCheckNo": "string",
+        "FccodReceivedAmount": 0,
+        "CodCheckNo": "string",
+        "EventLocation": {
+          "Name": "string",
+          "Attention": "string",
+          "Line1": "string",
+          "Line2": "string",
+          "Line3": "string",
+          "City": "string",
+          "State": "string",
+          "PostalCode": "string",
+          "Country": "string"
+        },
+        "MawbDetails": {
+          "Mawb": "string",
+          "DepartureDate": "2023-04-17T14:47:42.602Z",
+          "TimeZoneDepartureDate": "string",
+          "DepartureStation": "string",
+          "ArrivalDate": "2023-04-17T14:47:42.602Z",
+          "TimeZoneArrivalDate": "string",
+          "ArrivalStation": "string",
+          "ShipUnitcount": "string",
+          "ActualWeight": 0,
+          "WeightUom": "string"
+        },
+        "FlightDetails": {
+          "FlightNo": "string",
+          "DepartureDate": "2023-04-17T14:47:42.602Z",
+          "TimeZoneDepartureDate": "string",
+          "DepartureStation": "string",
+          "DepartureCity": "string",
+          "DepartureStateProv": "string",
+          "DeparturePostalCode": "string",
+          "DepartureCountryCode": "string",
+          "ArrivalDate": "2023-04-17T14:47:42.602Z",
+          "TimeZoneArrivalDate": "string",
+          "ArrivalStation": "string",
+          "ArrivalCity": "string",
+          "ArrivalStateProv": "string",
+          "ArrivalPostalCode": "string",
+          "ArrivalCountryCode": "string"
+        },
+        "TruckDetails": {
+          "AgentNo": "string",
+          "TruckNo": "string",
+          "ProNo": "string",
+          "Bol1": "string",
+          "Bol2": "string",
+          "Bol3": "string",
+          "Bol4": "string",
+          "StopWeight": 0,
+          "StopPieces": 0
+        }
+      }
+    ]
+  }
+]

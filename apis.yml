@@ -1,7 +1,15 @@
 aid: arcbest
 name: ArcBest
-description: ArcBest is a logistics company offering less-than-truckload (LTL) freight, truckload, moving, and supply chain management services. The ArcBest API platform provides integration 
-  capabilities for freight rating, booking, tracking, and supply chain visibility.
+description: >-
+  ArcBest is a multibillion-dollar freight and logistics provider operating ABF Freight (LTL), Panther
+  Premium Logistics (expedite), MoLo (truckload brokerage) and U-Pack (moving), with managed
+  transportation, warehousing and international forwarding alongside. Its integration surface is
+  published on arcb.com in two forms: REST APIs covering rate quote, volume quote, tracking, document
+  retrieval, transit times, pickup request and Bill of Lading, whose documentation sits behind a
+  customer login; and ANSI X12 EDI, where ArcBest publishes downloadable 204, 210 and 214 mapping
+  specifications openly. The one API surface documented publicly is ArcBest Expedite - a Customer API
+  and a third-party TMS API, each shipped as a downloadable Swagger-Codegen reference with worked JSON
+  examples, live at api.arcb.com with a test environment at test.api.arcb.com.
 type: Index
 deliveryModel:
   model: saas
@@ -16,19 +24,30 @@ deliveryModel:
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: freemium
-  onboarding: self-serve
+  pricing: enterprise
+  onboarding: sales
   trial: false
-  try_now: true
+  try_now: false
   public: false
-  label: Freemium · Self-serve signup
-  confidence: medium
+  label: Enterprise · Sales-gated, credentials issued by ArcBest
+  confidence: high
   source:
   - plans
   - authentication
-  - security
-  generated: '2026-09-03'
-  method: derived
+  - sandbox
+  - lifecycle
+  generated: '2026-09-04'
+  method: searched
+  evidence:
+  - https://arcb.com/technology/shippers/API
+  - https://support.arcb.com/en/articles/2851223-api-access
+  note: >-
+    Corrected 2026-09-04 from a derived "freemium / self-serve" reading. ArcBest publishes no plans
+    and no prices (plans/arcbest-plans-pricing.yml, plan_count 0); existing customers reach the API
+    documentation only after signing in at arcb.com, new customers are routed to
+    https://arcb.com/contact-us/connect-with-sales, and every Expedite credential is issued by
+    ArcBest support or the ArcBest Expedite team. There is no signup form, no instant key and no
+    anonymous try-it console.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
 tags:
   - Logistics
@@ -37,68 +56,196 @@ tags:
   - Supply Chain
   - Shipping
   - Transportation
+  - Expedite
+  - Truckload
+  - EDI
+  - Bill of Lading
+  - Rate Quote
+  - Shipment Tracking
 url: https://raw.githubusercontent.com/api-evangelist/arcbest/refs/heads/main/apis.yml
 created: '2026-03-23'
-modified: '2026-04-19'
+modified: '2026-09-04'
 specificationVersion: '0.23'
 apis:
 - aid: arcbest:arcbest-pickups-api
   name: ArcBest Pickups API
   description: Pickup scheduling and management
-  humanURL: https://www.arcbest.com/
+  humanURL: https://arcb.com/technology/shippers/API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
+  baseURL: https://api.arcb.com
   tags:
   - Pickups
   properties:
   - type: OpenAPI
     url: openapi/arcbest-pickups-api-openapi.yml
   - type: Documentation
-    url: https://www.arcbest.com/
+    url: https://arcb.com/technology/shippers/API
 - aid: arcbest:arcbest-rates-api
   name: ArcBest Rates API
   description: Freight rate quote services
-  humanURL: https://www.arcbest.com/
+  humanURL: https://arcb.com/technology/shippers/API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
+  baseURL: https://api.arcb.com
   tags:
   - Rates
   properties:
   - type: OpenAPI
     url: openapi/arcbest-rates-api-openapi.yml
   - type: Documentation
-    url: https://www.arcbest.com/
+    url: https://arcb.com/technology/shippers/API
 - aid: arcbest:arcbest-shipments-api
   name: ArcBest Shipments API
   description: Shipment booking and management
-  humanURL: https://www.arcbest.com/
+  humanURL: https://arcb.com/technology/shippers/API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
+  baseURL: https://api.arcb.com
   tags:
   - Shipments
   properties:
   - type: OpenAPI
     url: openapi/arcbest-shipments-api-openapi.yml
   - type: Documentation
-    url: https://www.arcbest.com/
+    url: https://arcb.com/technology/shippers/API
 - aid: arcbest:arcbest-tracking-api
   name: ArcBest Tracking API
   description: Shipment tracking and visibility
-  humanURL: https://www.arcbest.com/
+  humanURL: https://arcb.com/technology/shippers/API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
+  baseURL: https://api.arcb.com
   tags:
   - Tracking
   properties:
   - type: OpenAPI
     url: openapi/arcbest-tracking-api-openapi.yml
   - type: Documentation
-    url: https://www.arcbest.com/
+    url: https://arcb.com/technology/shippers/API
+- aid: arcbest:arcbest-expedite-customer-api
+  name: ArcBest Expedite Customer API
+  description: Quote, book and track ArcBest Expedite (Panther Premium Logistics) time-critical
+    freight directly from a shipper's own application. Client-credential authorize call returns a
+    bearer token; quotes are submitted, booking requests are queued for an ArcBest operator, booking
+    status is polled, and booked shipments are searched by reference number.
+  humanURL: https://arcb.com/technology/shippers/API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
+  baseURL: https://api.arcb.com/expedite/customer
+  tags:
+  - Expedite
+  - Quotes
+  - Booking
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-expedite-customer-api-openapi.yml
+  - type: Overlay
+    url: overlays/arcbest-expedite-customer-api-overlay.yaml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: APIReference
+    url: docs/arcbest-expedite-customer-api-definition.html
+  - type: Authentication
+    url: authentication/arcbest-authentication.yml
+  - type: Sandbox
+    url: sandbox/arcbest-sandbox.yml
+  - type: ErrorCatalog
+    url: errors/arcbest-problem-types.yml
+- aid: arcbest:arcbest-expedite-tms-api
+  name: ArcBest Expedite Third Party TMS API
+  description: The integration surface ArcBest publishes for transportation management systems and
+    freight-visibility platforms. HTTP Basic authenticated; quote, book, poll booking status,
+    retrieve the Bill of Lading and update PO/CUSTREF references on a booked order, with track-and-trace
+    milestones pushed to an endpoint the integrator registers with ArcBest.
+  humanURL: https://arcb.com/technology/shippers/API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
+  baseURL: https://api.arcb.com/expedite/digital
+  tags:
+  - Expedite
+  - TMS
+  - Booking
+  - Bill of Lading
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-expedite-tms-api-openapi.yml
+  - type: Overlay
+    url: overlays/arcbest-expedite-tms-api-overlay.yaml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: APIReference
+    url: docs/arcbest-expedite-tms-api-definition.html
+  - type: Webhooks
+    url: asyncapi/arcbest-track-and-trace-webhooks.yml
+  - type: Authentication
+    url: authentication/arcbest-authentication.yml
+  - type: Sandbox
+    url: sandbox/arcbest-sandbox.yml
+  - type: ErrorCatalog
+    url: errors/arcbest-problem-types.yml
 common:
+  - type: Website
+    url: https://arcb.com/
+  - type: OpenAPI
+    url: openapi/arcbest-expedite-customer-api-openapi.yml
+  - type: Conventions
+    url: conventions/arcbest-conventions.yml
+  - type: Conformance
+    url: conformance/arcbest-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/arcbest-lifecycle.yml
+  - type: ErrorCatalog
+    url: errors/arcbest-problem-types.yml
+  - type: DataModel
+    url: data-model/arcbest-data-model.yml
+  - type: Webhooks
+    url: asyncapi/arcbest-track-and-trace-webhooks.yml
+  - type: Sandbox
+    url: sandbox/arcbest-sandbox.yml
+  - type: Packages
+    url: packages/arcbest-packages.yml
+  - type: MCPServer
+    url: mcp/arcbest-mcp.yml
+  - type: LLMsTxt
+    url: llms/arcbest-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Plans
+    url: plans/arcbest-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/arcbest-rate-limits.yml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API
+  - type: APIReference
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: DeveloperPortal
+    url: https://arcb.com/technology/shippers
+  - type: GettingStarted
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: Support
+    url: https://support.arcb.com/en
+  - type: HelpCenter
+    url: https://support.arcb.com/en/collections/900749-quote-tools
+  - type: Blog
+    url: https://arcb.com/blog
+  - type: SignUp
+    url: https://arcb.com/registration/customer
+  - type: Login
+    url: https://arcb.com/login
+  - type: TermsOfService
+    url: https://arcb.com/terms-of-use
+  - type: PrivacyPolicy
+    url: https://arcb.com/privacy-policy
+  - type: Standard
+    url: https://arcb.com/technology/shippers/EDI
   - type: AgenticAccess
     url: agentic-access/arcbest-agentic-access.yml
   - type: DomainSecurity
     url: security/arcbest-domain-security.yml
   - type: Authentication
     url: authentication/arcbest-authentication.yml
+  - type: GitHubOrganization
+    url: https://github.com/ArcBest-Technologies
   - type: LinkedIn
     url: https://www.linkedin.com/company/arcbest
   - type: Portal
-    url: https://www.arcbest.com/
-  - type: Signup
-    url: https://www.arcbest.com/
+    url: https://arcb.com/
   - type: Features
     data:
     - name: LTL Rate Quotes
@@ -144,3 +291,9 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v3

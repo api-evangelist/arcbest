@@ -1,0 +1,152 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  ArcBest's own published Expedite API bundles (docs/), the ArcBest API and EDI pages, the ArcBest
+  booking request terms (https://arcb.com/booking-request-terms), and live probes of api.arcb.com and
+  test.api.arcb.com on 2026-09-04.
+provider: ArcBest
+providerId: arcbest
+applies_to:
+  - arcbest:arcbest-expedite-customer-api
+  - arcbest:arcbest-expedite-tms-api
+auth:
+  style: >-
+    Two different schemes on two different products. Customer API - POST ClientId/ClientSecret to
+    /authorize, then send `Authorization: Bearer <accesstoken>` on every call. TMS API - HTTP Basic,
+    username and password issued by the ArcBest Expedite team (confirmed live: WWW-Authenticate
+    header of `Basic realm="service"`).
+  onboarding: >-
+    Not self-serve. Credentials are issued by ArcBest support or the ArcBest Expedite team;
+    api@arcb.com is the published contact. Existing customers find their API ID after signing in at
+    https://arcb.com/api (Menu > Resources > APIs).
+  token_lifetime: not published
+  refresh: not published
+  see: authentication/arcbest-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  scope: []
+  header: null
+  detail: >-
+    No idempotency key, request id or replay-protection mechanism is documented on any ArcBest
+    Expedite write. This matters more here than on most APIs: POST /quotes/booking-request/expedite
+    and PUT /booking tender a physical freight movement, and ArcBest's own terms charge a
+    truck-ordered-but-not-used fee for a cancellation inside 24 hours of scheduled pickup. A
+    duplicate booking is a billable duplicate truck. The only partial mitigation ArcBest publishes is
+    that bookings are queued, not immediate - a booking request is verified by an operator before it
+    becomes an order - and that booking status is polled by quote number, so a client can detect that
+    a quote is already BOOKINGINPROGRESS before re-sending.
+pagination:
+  supported: false
+  style: none
+  detail: >-
+    No pagination is documented on any operation. The two list-shaped operations take their own keys
+    instead - GET /booking/status accepts repeated `quoteids` query parameters, and
+    POST /shipments/search takes an array of reference numbers in the body.
+filtering:
+  detail: No query-language, field-selection, expansion or sparse-fieldset mechanism is documented.
+metadata:
+  detail: >-
+    Free-form customer metadata rides on the shipment as references. The TMS API exposes
+    POST /order/refs/{arcbOrderNo} taking an array of {type, value} with published types `PO` and
+    `CUSTREF`; the Customer API quote model carries a References[] array of {Number, ReferenceType}.
+request_id:
+  supported: false
+  detail: >-
+    No request-id or correlation header is documented and none was observed. Correlation is by
+    business key instead - UnifiedQuoteNo / ExpediteQuoteId ("P000..." format), ExpediteOrderNo
+    (yyyymm12345 format, which also serves as the BOL number) and ArcBestOrderNo (the pro number).
+versioning:
+  scheme: path-free, document-dated
+  current_version: v1
+  detail: >-
+    Both published definitions declare Version v1 and neither base URL carries a version segment
+    (https://api.arcb.com/expedite/customer, https://api.arcb.com/expedite/digital). Change is
+    communicated by re-dating the downloadable documentation bundle, not by a version in the URL or a
+    header - the customer bundle is stamped August 2024 and the TMS bundle August 2025.
+  see: lifecycle/arcbest-lifecycle.yml
+errors:
+  envelope: >-
+    Custom. Validation and business rejections come back inside an HTTP 200 response, in an `Errors[]`
+    array of {Code, Message}, with the payload fields nulled. Not RFC 9457.
+  see: errors/arcbest-problem-types.yml
+rate_limits:
+  published: false
+  detail: No rate limits, quotas or throttling headers are published. See rate-limits/arcbest-rate-limits.yml.
+content_types:
+  request: application/json
+  response: application/json
+  note: >-
+    ArcBest also states on its EDI page that it "can accept XML or JSON per EDI connections", so the
+    same business surface is reachable as ANSI X12 204/210/214, XML or JSON.
+date_time:
+  format: ISO 8601 with fractional seconds, e.g. "2023-03-29T08:00:00.0000000"
+  detail: >-
+    Origin and Destination each carry a ReadyDate/ByDate pair describing the window in which the load
+    is ready and by when it must be processed; ReadyDate must precede ByDate and must be in the
+    future. Time zone handling is per-shipment (TimeZone, ReadyDateTimeZone fields), not UTC-normalised.
+address_conventions:
+  detail: >-
+    Published verbatim by ArcBest - 2-character state codes, 5-digit postal codes, and 3-character
+    country codes ("USA"). LocationType takes values such as "BUSINESS".
+async_behavior:
+  detail: >-
+    Booking is asynchronous by design. A booking request is queued and confirmed by an ArcBest
+    operator "within minutes"; the client polls GET /quotes/booking-request/status (Customer API) or
+    GET /booking/status (TMS API) until the status reaches Shipment Booked / SHIPMENTBOOKED and an
+    order number is returned. Shipment milestones are then PUSHED to an endpoint the integrator
+    registers with ArcBest - see asyncapi/arcbest-track-and-trace-webhooks.yml.
+dry_run_mode:
+  supported: true
+  detail: >-
+    Not a dry-run flag, but a full test environment: ArcBest publishes test.api.arcb.com and states
+    "We prefer that you begin integration against the test URI". Quoting is also effectively a
+    rehearsal of booking - a quote reserves nothing and costs nothing, and the quote response returns
+    the earliest available pickup so a client can correct an impossible schedule before tendering.
+  see: sandbox/arcbest-sandbox.yml
+reversibility:
+  grade: none
+  detail: >-
+    ArcBest publishes NO reversal operation on either Expedite API. There is no cancel, void, unbook,
+    undo or delete operation in the Customer API or the TMS API - the documented surface is quote,
+    book, poll status, fetch BOL, update references. Once a booking request reaches SHIPMENTBOOKED an
+    integrator cannot take it back programmatically; cancellation is a commercial, human process
+    through ArcBest, and ArcBest's own booking request terms attach a cost to it. This is the single
+    largest agent-readiness gap on this surface, because the action being taken is physical.
+  surfaces:
+    - operation: quotesBookExpediteQuote
+      reversal_operation: null
+      window: null
+      note: No API reversal. Queued for operator verification before it becomes an order, which is a delay, not an undo.
+    - operation: quotesBookTimeCriticalForwardingQuote
+      reversal_operation: null
+      window: null
+      note: No API reversal.
+    - operation: bookingCreate
+      reversal_operation: null
+      window: null
+      note: No API reversal.
+    - operation: orderUpdateRefs
+      reversal_operation: orderUpdateRefs
+      window: null
+      note: >-
+        Effectively reversible by rewriting the references - the operation replaces PO/CUSTREF values
+        on the BOL. No window is stated. Counted as a correction path, not a documented reversal.
+  commercial_window:
+    stated: true
+    text: >-
+      "Once a carrier driver is dispatched on your load hereunder, if shipment cancellation occurs
+      within twenty-four (24) hours of the scheduled pickup time, you will be charged a truck ordered
+      but not used fee."
+    docs: https://arcb.com/booking-request-terms
+    note: >-
+      This is a stated CONTRACTUAL window, not an API reversal window. It is recorded because it is
+      the money consequence of a booking an agent cannot undo; it does not upgrade the grade, because
+      there is no operation to call.
+cross_links:
+  errors: errors/arcbest-problem-types.yml
+  lifecycle: lifecycle/arcbest-lifecycle.yml
+  authentication: authentication/arcbest-authentication.yml
+  rate_limits: rate-limits/arcbest-rate-limits.yml
+  sandbox: sandbox/arcbest-sandbox.yml
+  webhooks: asyncapi/arcbest-track-and-trace-webhooks.yml

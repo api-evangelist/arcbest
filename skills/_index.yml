@@ -1,0 +1,32 @@
+generated: '2026-09-04'
+method: generated
+source: >-
+  Grounded in openapi/arcbest-expedite-customer-api-openapi.yml and
+  openapi/arcbest-expedite-tms-api-openapi.yml, which are themselves derived from ArcBest's own
+  published Expedite API definition bundles. Every operationId referenced in these skills appears in
+  those documents; none is invented. ArcBest publishes no skills, AGENTS.md or llms-style agent
+  instructions of its own for the API (its llms.txt is a site page index, not an API guide).
+provider: ArcBest
+providerId: arcbest
+skill_count: 3
+skills:
+  - name: arcbest-quote-and-book-expedite-shipment
+    file: skills/arcbest-quote-and-book-expedite-shipment.md
+    api: arcbest:arcbest-expedite-customer-api
+    operations: [authorizePost, quotesSubmitQuote, quotesBookExpediteQuote, quotesGetBookingStatus]
+    consequence: physical
+  - name: arcbest-track-expedite-shipment
+    file: skills/arcbest-track-expedite-shipment.md
+    api: arcbest:arcbest-expedite-customer-api
+    operations: [authorizePost, shipmentsGetShipmentsByReferenceNumbers, shipmentsGetShipmentStatusCodes]
+    consequence: read
+  - name: arcbest-tms-book-and-document-load
+    file: skills/arcbest-tms-book-and-document-load.md
+    api: arcbest:arcbest-expedite-tms-api
+    operations: [quoteCreate, bookingCreate, bookingGetStatus, orderBol, orderUpdateRefs]
+    consequence: physical
+warnings:
+  - >-
+    Every booking operation on this provider is irreversible through the API. There is no cancel,
+    void or undo operation, and no idempotency key. Each booking skill says so at the point of the
+    call.

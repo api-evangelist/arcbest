@@ -1,0 +1,213 @@
+openapi: 3.1.0
+info:
+  title: ArcBest Expedite Customer API
+  version: v1
+  summary: Quote, book and track ArcBest Expedite (Panther Premium Logistics) time-critical freight.
+  description: >-
+    The ArcBest Expedite Customer API lets a shipper request an expedite rate quote, submit a
+    booking request against a returned quote, poll the booking status until an ArcBest operator
+    confirms it, and search booked shipments by reference number.
+
+
+    Flow published by ArcBest: (1) POST ClientId + ClientSecret to /authorize; (2) use the returned
+    AccessToken as an `Authorization: Bearer <token>` header; (3) POST the quote to /quotes;
+    (4) show QuoteResponse.Products.ExpediteOptions to the end user; (5) POST the UnifiedQuoteNo
+    and ResponseNo to /quotes/booking-request/expedite; (6) poll GET /quotes/booking-request/status
+    until it returns "Shipment Booked" with the order number; (7) track with /shipments/search.
+
+
+    PROVENANCE: this document was DERIVED by API Evangelist from ArcBest's own publicly downloadable
+    API definition bundle - the Swagger-Codegen static HTML reference "ArcBest Expedite Customer API"
+    and the PDF "Customer Expedite Quote and Book Instructions and JSON Examples (August 2024)",
+    both shipped inside
+    https://arcb.com/sites/default/files/API/Arcbest-Expedite-Customer-Quoting-Booking-API-2024-8.zip
+    (verbatim copies in this repo under docs/). Paths, HTTP methods, operationIds, tags, parameter
+    names and types, response codes and descriptions are transcribed verbatim from that bundle.
+    Request and response body schemas are NOT reproduced here beyond what ArcBest published as JSON
+    models (json-schema/arcbest-expedite-quote-request-model.json,
+    json-schema/arcbest-expedite-quote-response-model.json); the live swagger.json is auth-gated
+    (HTTP 401 at https://api.arcb.com/expedite/customer/swagger/v1/swagger.json, probed 2026-09-04).
+    Nothing here is invented.
+  contact:
+    name: ArcBest API Support
+    email: api@arcb.com
+    url: https://arcb.com/technology/shippers/API
+  termsOfService: https://arcb.com/terms-of-use
+  x-generated-from: provider-published Swagger-Codegen HTML reference + provider PDF instructions
+  x-method: derived
+  x-source:
+    - https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+    - https://arcb.com/sites/default/files/API/Arcbest-Expedite-Customer-Quoting-Booking-API-2024-8.zip
+    - docs/arcbest-expedite-customer-api-definition.html
+    - docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf
+  x-derived-on: '2026-09-04'
+servers:
+  - url: https://api.arcb.com/expedite/customer
+    description: Production. Stated verbatim in the ArcBest customer instructions PDF ("post your client id and secret to https://api.arcb.com/expedite/customer/authorize"). GET on /authorize returns HTTP 405 Method Not Allowed, probed 2026-09-04, confirming the endpoint is live and POST-only.
+  - url: https://test.api.arcb.com/expedite/customer
+    description: Test / sandbox. "We prefer that you begin integration against the test URI https://test.api.arcb.com/expedite/customer/" - ArcBest customer instructions PDF, August 2024.
+tags:
+  - name: Authorize
+    description: Exchange a ClientId and ClientSecret for a bearer access token.
+  - name: Quotes
+    description: Submit expedite rate quotes, request bookings against them, and poll booking status.
+  - name: Shipments
+    description: Look up booked shipments and the shipment status code vocabulary.
+security:
+  - bearerAuth: []
+paths:
+  /authorize:
+    post:
+      operationId: authorizePost
+      summary: Exchange client credentials for an access token
+      description: >-
+        POST the ClientId (32 characters) and ClientSecret (64 characters) issued by ArcBest support.
+        Returns an access token of roughly 1000 characters, to be sent on every other call as
+        `Authorization: Bearer <accesstoken>`.
+      tags: [Authorize]
+      security: []
+      requestBody:
+        required: true
+        description: Client credentials issued by ArcBest support.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ClientId:
+                  type: string
+                  description: 32-character client identifier issued by ArcBest support.
+                ClientSecret:
+                  type: string
+                  description: 64-character client secret issued by ArcBest support.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  AccessToken:
+                    type: string
+                    description: Bearer access token, approximately 1000 characters.
+  /quotes:
+    post:
+      operationId: quotesSubmitQuote
+      summary: Submit an expedite rate quote request
+      description: >-
+        Submit a quote request. The response carries Products.ExpediteOptions, which must be shown
+        to the end user; the chosen option's UnifiedQuoteNo and ResponseNo are what a booking request
+        is placed against.
+      tags: [Quotes]
+      requestBody:
+        required: true
+        description: Quote request. ArcBest publishes the request model as JSON at json-schema/arcbest-expedite-quote-request-model.json.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+  /quotes/booking-request/expedite:
+    post:
+      operationId: quotesBookExpediteQuote
+      summary: Submit a new expedite booking request
+      description: >-
+        Submitting a booking request will not immediately book the quote. Please check the booking
+        request status to determine if the booking request was successful and retrieve your order
+        number.
+      tags: [Quotes]
+      requestBody:
+        required: true
+        description: Booking request carrying the UnifiedQuoteNo ("P000...") and ResponseNo of the chosen expedite option.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+  /quotes/booking-request/time-critical-forwarding:
+    post:
+      operationId: quotesBookTimeCriticalForwardingQuote
+      summary: Submit a new time-critical forwarding booking request
+      description: >-
+        Submitting a booking request will not immediately book the quote. Please check the booking
+        request status to determine if the booking request was successful and retrieve your order
+        number.
+      tags: [Quotes]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+  /quotes/booking-request/status:
+    get:
+      operationId: quotesGetBookingStatus
+      summary: Get the status of a booking request
+      description: >-
+        The booking status may be one of the following - Quoted: a quote exists, but there is no
+        booking request. Booking in Progress: the booking request has been received and is being
+        processed. Shipment Booked: the booking request was successful. Unable to Fulfill. Unknown.
+        When booked, the order number is returned in the format yyyymm12345, such as 20230470078.
+      tags: [Quotes]
+      parameters:
+        - name: quoteNo
+          in: query
+          required: true
+          description: The quote number.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+        '404':
+          description: NotFound
+  /shipments/status-codes:
+    get:
+      operationId: shipmentsGetShipmentStatusCodes
+      summary: List shipment status codes
+      description: Returns the shipment status code vocabulary used across tracking responses.
+      tags: [Shipments]
+      responses:
+        '200':
+          description: OK
+  /shipments/search:
+    post:
+      operationId: shipmentsGetShipmentsByReferenceNumbers
+      summary: Search shipments by reference numbers
+      description: >-
+        After /quotes/booking-request/status returns the pro number, track the shipment with this
+        operation. ArcBest publishes the tracking model as JSON at
+        json-schema/arcbest-expedite-tracking-model.json.
+      tags: [Shipments]
+      requestBody:
+        required: true
+        description: The reference numbers to search on.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Access token returned by POST /authorize, sent as `Authorization: Bearer <accesstoken>`.
+        Credentials (ClientId/ClientSecret) are issued by ArcBest support, not self-serve.

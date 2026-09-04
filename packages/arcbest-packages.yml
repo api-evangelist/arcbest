@@ -1,0 +1,36 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  Searched npm (registry.npmjs.org search "arcbest" and "arcb"), PyPI, the ArcBest developer surface
+  (https://arcb.com/technology/shippers/API), the published Expedite API bundles at
+  https://arcb.com/technology/shippers/API/expedite-setup-documentation-download, and GitHub.
+provider: ArcBest
+providerId: arcbest
+package_count: 0
+official_package_count: 0
+packages: []
+findings:
+  - registry: npm
+    query: arcbest
+    result: 0 results (registry.npmjs.org/-/v1/search?text=arcbest, HTTP 200, total 0), probed 2026-09-04
+  - registry: pypi
+    query: arcbest
+    result: HTTP 404 at pypi.org/pypi/arcbest/json, probed 2026-09-04
+  - registry: github
+    query: github.com/ArcBest-Technologies
+    result: >-
+      The org exists (api.github.com/orgs/ArcBest-Technologies, HTTP 200, created 2023-07-03) but
+      reports public_repos 0 and is ARCHIVED (archived_at 2026-03-23). No first-party SDK, sample
+      client or CLI is published there.
+  - registry: provider-docs
+    query: ArcBest Expedite API bundles
+    result: >-
+      The two publicly downloadable bundles ship Swagger-Codegen SDK USAGE SAMPLES (Java, C#, PHP,
+      Python, Perl, JavaScript, Obj-C) inside the static HTML reference, naming packages such as
+      `arc_best_expedite_customer_api` and `arcbest_expedite_3rd_party_tms_api`. Those package names
+      are Swagger-Codegen placeholders in generated sample code; none of them is published to any
+      registry. They are NOT counted as SDKs.
+note: >-
+  ArcBest publishes no first-party client library in any registry. Integrators are expected to call
+  the REST surface directly, or to integrate over EDI (ANSI X12 204/210/214). Because there is no
+  official SDK, no `SDKs` pointer is emitted in apis.yml - an honest zero, not an omission.

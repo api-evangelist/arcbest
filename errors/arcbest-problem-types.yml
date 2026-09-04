@@ -1,0 +1,97 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  ArcBest's own published Expedite API bundles - docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  (verbatim error response examples) and docs/arcbest-expedite-customer-api-definition.html
+  (documented HTTP status codes) - plus live probes of api.arcb.com on 2026-09-04.
+provider: ArcBest
+providerId: arcbest
+format: custom-envelope
+note: >-
+  ArcBest Expedite does NOT use RFC 9457 Problem Details. Validation and business rejections are
+  returned INSIDE a HTTP 200 response envelope, in an `Errors` array of {Code, Message} objects, with
+  every other field of the envelope nulled out. A client that only checks the HTTP status will read a
+  rejected quote as a successful one. HTTP status codes are used for transport and authentication
+  failures only.
+envelope:
+  field: Errors
+  shape: array of objects
+  members:
+    - name: Code
+      type: integer
+      description: Numeric code. In every published example this mirrors an HTTP status number (400) rather than being a distinct application code.
+    - name: Message
+      type: string
+      description: Human-readable explanation. No machine-stable error identifier is published.
+  empty_on_success: true
+  detail: >-
+    On a rejected quote every payload field (ExpediteQuoteId, Charge, AdvertisedTransitDays,
+    AdvertisedDueDate, PickupDate) is null, ItemizedCharges.Items is empty, and Errors[] is populated.
+http_statuses:
+  - status: 200
+    description: OK. May still carry a populated Errors[] array - read the envelope, not the status.
+    operations: [quoteCreate, quotesSubmitQuote, bookingCreate, quotesBookExpediteQuote, quotesBookTimeCriticalForwardingQuote, bookingGetStatus, orderBol, orderUpdateRefs, shipmentsGetShipmentStatusCodes, shipmentsGetShipmentsByReferenceNumbers, authorizePost]
+  - status: 400
+    description: BadRequest. Documented on quotesGetBookingStatus in the provider's own API reference.
+    operations: [quotesGetBookingStatus]
+  - status: 401
+    description: Unauthorized. Documented on quotesGetBookingStatus, and observed live on the TMS gateway root with a WWW-Authenticate header of `Basic realm="service"` (probed 2026-09-04).
+    operations: [quotesGetBookingStatus]
+  - status: 404
+    description: NotFound. Documented on quotesGetBookingStatus.
+    operations: [quotesGetBookingStatus]
+  - status: 405
+    description: Method Not Allowed. Observed live on GET https://api.arcb.com/expedite/customer/authorize (probed 2026-09-04); the endpoint is POST-only.
+    operations: [authorizePost]
+problem_types:
+  - id: missing-destination-city
+    title: Must submit destination city
+    status: 400
+    envelope_code: 400
+    message: Must submit destination city
+    remediation: Populate Destination.Address.City. ArcBest also requires 2-character state codes and 5-digit postal codes, with 3-character country codes ("USA").
+    evidence: docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  - id: ready-date-in-past
+    title: Origin Ready date must be in the future
+    status: 400
+    envelope_code: 400
+    message: Origin Ready date must be in the future
+    remediation: Set Origin.ReadyDate to a future datetime, and ensure ReadyDate precedes ByDate - the pair describes the window in which the load is ready and by when it must be processed.
+    evidence: docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  - id: mileage-not-valid-for-expedite
+    title: The mileage of the quoted haul is not valid for ArcBest expedite
+    status: 400
+    envelope_code: 400
+    message: The mileage of the quoted haul is not valid for ArcBest expedite.
+    remediation: The lane is out of scope for the expedite product. Quote a different ArcBest service.
+    evidence: docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  - id: dimension-weight-limits
+    title: Dimensions or weight beyond limits
+    status: 400
+    envelope_code: 400
+    message: null
+    remediation: Reduce commodity dimensions or weight, or split the load. Exact thresholds are not published.
+    evidence: docs/arcbest-expedite-tms-api-definition.html
+  - id: incompatible-scheduling
+    title: Incompatible scheduling
+    status: 400
+    envelope_code: 400
+    message: null
+    remediation: The requested pickup/delivery windows cannot be served. The quote response returns the earliest available pickup - reseed the request from it.
+    evidence: docs/arcbest-expedite-tms-api-definition.html
+  - id: rejected-accessorial
+    title: Rejected accessorial
+    status: 400
+    envelope_code: 400
+    message: null
+    remediation: One of the requested accessorials (temperature control, lift gate, hazmat) is not available on this lane or equipment. Remove or change the accessorial.
+    evidence: docs/arcbest-expedite-tms-api-definition.html
+  - id: unable-to-fulfill
+    title: Unable to Fulfill
+    status: 200
+    envelope_code: null
+    message: Unable to Fulfill
+    remediation: >-
+      Not an HTTP error - a terminal booking-request status returned by
+      GET /quotes/booking-request/status. ArcBest could not book the requested load. Re-quote.
+    evidence: docs/arcbest-expedite-customer-api-definition.html

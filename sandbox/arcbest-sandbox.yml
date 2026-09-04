@@ -1,0 +1,77 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  ArcBest's own published Expedite instructions - docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf
+  and docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf, downloaded from
+  https://arcb.com/technology/shippers/API/expedite-setup-documentation-download - plus live probes
+  of test.api.arcb.com on 2026-09-04.
+provider: ArcBest
+providerId: arcbest
+has_sandbox: true
+model: separate-host
+detail: >-
+  ArcBest runs a distinct test environment on its own hostname and tells integrators to start there.
+  There is no test-mode key prefix and no mode flag in the payload - test and production are told
+  apart by the host you call.
+environments:
+  - name: test
+    base_urls:
+      - https://test.api.arcb.com/expedite/customer
+      - https://test.api.arcb.com/expedite/digital
+    quote: >-
+      "We prefer that you begin integration against the test URI
+      https://test.api.arcb.com/expedite/customer/" - ArcBest Customer Expedite instructions, August
+      2024. "API top level URI is https://test.api.arcb.com/Expedite/Digital/" - ArcBest TMS Expedite
+      instructions, August 2024. Every curl sample in ArcBest's own TMS API reference targets this host.
+    probed:
+      - url: https://test.api.arcb.com/expedite/digital/
+        status: 401
+        note: Live, HTTP Basic challenge (`Basic realm="service"`). Probed 2026-09-04.
+      - url: https://test.api.arcb.com/
+        status: 403
+        note: Gateway root. Probed 2026-09-04.
+  - name: production
+    base_urls:
+      - https://api.arcb.com/expedite/customer
+      - https://api.arcb.com/expedite/digital
+    probed:
+      - url: https://api.arcb.com/expedite/customer/authorize
+        status: 405
+        note: Method Not Allowed on GET - live POST-only endpoint. Probed 2026-09-04.
+      - url: https://api.arcb.com/expedite/digital/
+        status: 401
+        note: Live, HTTP Basic challenge. Probed 2026-09-04.
+credentials:
+  self_serve: false
+  detail: >-
+    Test credentials are not self-serve. Customer API - "Prior to a quote, you must get the basic
+    authorization credentials by posting your client id and secret to
+    https://api.arcb.com/expedite/customer/authorize. These are provided by ArcBest support."
+    TMS API - "Request basic authentication username and password from the ArcBest Expedite team."
+    There is no signup form, no instant key and no anonymous playground.
+  key_prefixes: []
+  note: ArcBest publishes no test-vs-live key prefix convention. ClientId is 32 characters and ClientSecret 64 characters; neither carries a mode marker.
+test_data:
+  published: true
+  detail: >-
+    ArcBest publishes complete worked request and response payloads in both instruction PDFs -
+    a full expedite quote (Millwood WV to Nogales AZ, 6 pallets), a booking request, booking status
+    responses across BOOKINGINPROGRESS and SHIPMENTBOOKED, a BOL retrieval, a reference update, and a
+    track-and-trace push payload. Sample quote ids ("P0004373364"), expedite order numbers
+    ("20230182865") and ArcBest order numbers ("433672787") appear throughout. These are ArcBest's
+    own published examples, transcribed nowhere else in this repo as live values.
+  files:
+    - json-schema/arcbest-expedite-quote-request-model.json
+    - json-schema/arcbest-expedite-quote-response-model.json
+    - json-schema/arcbest-expedite-tracking-model.json
+test_clocks: false
+fixtures_or_triggers: false
+webhook_testing:
+  detail: >-
+    Track-and-trace is push-only to an endpoint the integrator supplies. "Please provide your tracking
+    endpoint information to us with authentication details" - there is no self-serve endpoint
+    registration UI and no documented replay or test-fire tool.
+gaps:
+  - No self-serve sandbox signup - every credential is issued by a human at ArcBest.
+  - No test-mode key prefix, so a client cannot tell from a credential which environment it is for.
+  - No test clock, fixture or trigger tooling for simulating milestones.

@@ -1,0 +1,56 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the ArcBest Expedite Third Party TMS API
+  version: 1.0.0
+extends: ../openapi/arcbest-expedite-tms-api-openapi.yml
+x-generated: '2026-09-04'
+x-method: generated
+x-source: >-
+  Captures the API Evangelist annotations applied on top of the derived ArcBest Expedite Third Party
+  TMS API contract - provenance, agent-consequence classification, the push surface that sits outside
+  the request/response contract, and the runtime facts observed by probe. The underlying OpenAPI is
+  never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provenance:
+        derived_from: ArcBest's own publicly downloadable Expedite TMS API definition bundle (Swagger-Codegen HTML + instructions PDF)
+        bundle: https://arcb.com/sites/default/files/API/ArcBest-Expedite-Digital-API-August-2024.zip
+        verbatim_copies:
+          - docs/arcbest-expedite-tms-api-definition.html
+          - docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+        live_spec_status: auth-gated (HTTP 401 with Basic challenge, probed 2026-09-04)
+      x-apievangelist-agent-readiness:
+        idempotency: none
+        reversibility: none
+        dry_run: sandbox host only (test.api.arcb.com)
+        onboarding: credentials issued by the ArcBest Expedite team, not self-serve
+      x-apievangelist-push-surface:
+        name: Track and Trace
+        direction: provider-to-consumer
+        catalog: asyncapi/arcbest-track-and-trace-webhooks.yml
+        note: >-
+          Milestones and location pings are POSTed by ArcBest to an endpoint the integrator hosts and
+          registers out of band. It is part of the integration but is not expressible in this
+          request/response document, and ArcBest publishes no AsyncAPI for it.
+  - target: $.paths['/booking'].put
+    update:
+      x-agentic-consequence: physical
+      x-apievangelist-note: >-
+        Tenders a physical freight movement. No idempotency key and no cancel operation. Poll
+        /booking/status with the quote id before re-sending.
+  - target: $.paths['/quote'].post
+    update:
+      x-agentic-consequence: read
+      x-apievangelist-note: >-
+        Reserves nothing and costs nothing. Errors are returned INSIDE a 200 response in the Errors[]
+        array, so a client must read the envelope rather than the HTTP status.
+  - target: $.paths['/order/refs/{arcbOrderNo}'].post
+    update:
+      x-agentic-consequence: write
+      x-apievangelist-note: >-
+        Keyed on the ArcBest order (pro) number, NOT the expedite order number used for the BOL.
+        Correctable by rewriting the references; no window is published.
+  - target: $.paths['/order/bol/{expediteOrderNo}'].get
+    update:
+      x-apievangelist-note: Keyed on the expedite order number, which doubles as the BOL number.

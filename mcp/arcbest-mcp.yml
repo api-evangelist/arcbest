@@ -1,0 +1,86 @@
+generated: '2026-09-04'
+method: derived
+status: candidate
+source: >-
+  Derived from openapi/arcbest-expedite-customer-api-openapi.yml and
+  openapi/arcbest-expedite-tms-api-openapi.yml, which are themselves derived from ArcBest's own
+  published Expedite API definition bundles. Searched for an official ArcBest MCP server (web search,
+  npm registry search for "arcbest", the ArcBest developer pages and the archived
+  github.com/ArcBest-Technologies org) - none exists.
+provider: ArcBest
+providerId: arcbest
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+note: >-
+  ArcBest ships NO MCP server, hosted or local. The tools below are a CANDIDATE list this pipeline
+  derived from ArcBest's own documented operations so an agent builder can see the shape of the
+  surface. They are not callable as MCP today. Every ArcBest Expedite operation is credential-gated
+  (bearer token from /authorize on the Customer API, HTTP Basic on the TMS API) and credentials are
+  issued by ArcBest support, so any MCP server over this surface would have to carry per-tenant
+  credentials.
+tools:
+  - name: arcbest_authorize
+    description: Exchange an ArcBest-issued ClientId and ClientSecret for a bearer access token.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [authorizePost]
+    consequence: read
+  - name: arcbest_submit_expedite_quote
+    description: Submit an expedite rate quote request and receive expedite options with pricing and transit.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [quotesSubmitQuote]
+    consequence: read
+  - name: arcbest_book_expedite_quote
+    description: Submit a booking request against a returned expedite quote. Queued for an ArcBest operator; does not book immediately.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [quotesBookExpediteQuote]
+    consequence: physical
+  - name: arcbest_book_time_critical_forwarding_quote
+    description: Submit a booking request against a returned time-critical forwarding quote.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [quotesBookTimeCriticalForwardingQuote]
+    consequence: physical
+  - name: arcbest_get_booking_status
+    description: Poll the status of a booking request by quote number until it reports Shipment Booked.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [quotesGetBookingStatus]
+    consequence: read
+  - name: arcbest_list_shipment_status_codes
+    description: List the shipment status code vocabulary used in tracking responses.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [shipmentsGetShipmentStatusCodes]
+    consequence: read
+  - name: arcbest_search_shipments
+    description: Search booked shipments by reference number.
+    api: arcbest:arcbest-expedite-customer-api
+    rest: [shipmentsGetShipmentsByReferenceNumbers]
+    consequence: read
+  - name: arcbest_tms_create_quote
+    description: Create an expedite rate quote from a third-party TMS.
+    api: arcbest:arcbest-expedite-tms-api
+    rest: [quoteCreate]
+    consequence: read
+  - name: arcbest_tms_create_booking
+    description: Book a quoted expedite load from a third-party TMS.
+    api: arcbest:arcbest-expedite-tms-api
+    rest: [bookingCreate]
+    consequence: physical
+  - name: arcbest_tms_get_booking_status
+    description: Poll booking status for one or more TMS quote ids.
+    api: arcbest:arcbest-expedite-tms-api
+    rest: [bookingGetStatus]
+    consequence: read
+  - name: arcbest_tms_get_bol
+    description: Retrieve the Bill of Lading for a booked expedite order.
+    api: arcbest:arcbest-expedite-tms-api
+    rest: [orderBol]
+    consequence: read
+  - name: arcbest_tms_update_order_refs
+    description: Update PO numbers or customer references on a booked order's BOL.
+    api: arcbest:arcbest-expedite-tms-api
+    rest: [orderUpdateRefs]
+    consequence: write

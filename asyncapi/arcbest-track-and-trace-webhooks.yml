@@ -1,0 +1,63 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  ArcBest Expedite Third Party TMS API - "Track and Trace" section of
+  docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf and the published tracking model
+  (json-schema/arcbest-expedite-tracking-model.json), both downloaded from
+  https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+provider: ArcBest
+providerId: arcbest
+type: Webhooks
+asyncapi_published: false
+note: >-
+  ArcBest publishes NO AsyncAPI document. It does operate a real push surface, documented in prose
+  with a full example payload and a field-by-field model, so the webhook catalog is captured here
+  instead. Nothing in this file is invented; the direction, transport, payload shape and registration
+  process are all stated by ArcBest.
+direction: provider-to-consumer
+transport: HTTPS POST
+registration:
+  self_serve: false
+  detail: >-
+    "Please provide your tracking endpoint information to us with authentication details."
+    The integrator builds and hosts the receiving endpoint and registers it with the ArcBest Expedite
+    team out of band. There is no subscription API, no endpoint-management UI, and no published
+    signature or shared-secret verification scheme - authentication is whatever the integrator
+    specifies to ArcBest.
+delivery_semantics:
+  detail: >-
+    "The ArcBest Expedite Third Party Track and Trace system keeps track of orders as they are
+    dispatched and receive milestones and location pings. Each update triggers POSTing the full order
+    history to your tracking endpoint." Each delivery carries the FULL history, not a delta -
+    "You must develop an endpoint to refresh shipment history when you receive an update from us
+    (either in full or adding new entries since the last update based on their timestamp)."
+  full_snapshot: true
+  ordering_key: StatusUpdates[].Timestamp
+  retries: not published
+  signature: not published
+channels:
+  - name: track-and-trace
+    operation: receive
+    summary: Full order tracking history pushed on every milestone or location ping for a booked expedite order.
+    payload_model: json-schema/arcbest-expedite-tracking-model.json
+    payload_fields:
+      - Shipment.ShipmentIdentifiers[] - {Type, Value}; Type 1 is the ArcBest order (pro) number, Type 0 is the ArcBest BOL number (expedite pro).
+      - Shipment.expediteOrderNo
+      - Shipment.arcbestOrderNo
+      - StatusUpdates[] - {ShipmentStatus, StatusCode, StopType, Timestamp, ...}
+    status_vocabulary:
+      detail: >-
+        Milestone sequence and field values are published by ArcBest in "Arcbest Expedite Tracking
+        Model.xlsx", shipped in the same bundle. The Customer API also exposes the code list live at
+        GET /shipments/status-codes (operationId shipmentsGetShipmentStatusCodes).
+security:
+  detail: >-
+    Not published. ArcBest asks the integrator for "authentication details" for their endpoint, so
+    the receiver defines the scheme. No HMAC signature, timestamp header or replay window is
+    documented, which means a receiver cannot verify that a push actually came from ArcBest beyond
+    whatever transport credential it issued.
+gaps:
+  - No AsyncAPI or machine-readable event contract.
+  - No self-serve endpoint registration or rotation.
+  - No published signature, retry policy or delivery guarantee.
+  - No event catalog by name - the single channel carries every milestone type.

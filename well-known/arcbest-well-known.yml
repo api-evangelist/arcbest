@@ -1,0 +1,98 @@
+generated: '2026-09-04'
+method: probed
+source: live HTTPS probes of every host this record knows - the registrable domains arcb.com and
+  arcbest.com, the API hosts named in the provider's own published instructions (api.arcb.com,
+  test.api.arcb.com), and the docs/support host (support.arcb.com).
+note: >-
+  ArcBest serves NO /.well-known/ document of its own on any host. The single HTTP 200 in this probe
+  is support.arcb.com/.well-known/security.txt, which is Intercom's - support.arcb.com is an Intercom
+  Help Center, and the document names Intercom as the reporting party with
+  Canonical https://app.intercom.com/.well-known/security.txt. It is a vendor document served under
+  an ArcBest hostname, NOT an ArcBest disclosure policy, so no WellKnown and no SecurityTxt pointer
+  is emitted for ArcBest on the strength of it. Everything else 404s. Recorded as data.
+hosts:
+  - host: arcb.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: www.arcbest.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: api.arcb.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: test.api.arcb.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: support.arcb.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: null
+        note: >-
+          200, but the body is Intercom's vendor security.txt (Contact bugcrowd.com/intercom,
+          Canonical https://app.intercom.com/.well-known/security.txt). Not saved and not credited to
+          ArcBest - support.arcb.com is a hosted Intercom Help Center.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404

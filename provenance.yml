@@ -6,8 +6,11 @@ artifacts:
   agentic-access/arcbest-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  asyncapi/arcbest-track-and-trace-webhooks.yml:
+    method: searched
+    evidence: declared in the artifact
   authentication/arcbest-authentication.yml:
-    method: derived
+    method: searched
     evidence: declared in the artifact
   collections/arcbest-pickups-api.opencollection.json:
     method: derived
@@ -33,6 +36,30 @@ artifacts:
   collections/arcbest-tracking-api.postman_collection.json:
     method: derived
     evidence: openapi/arcbest-tracking-api
+  conformance/arcbest-conformance.yml:
+    method: searched
+    evidence: declared in the artifact
+  conventions/arcbest-conventions.yml:
+    method: searched
+    evidence: declared in the artifact
+  data-model/arcbest-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  docs/arcbest-expedite-customer-api-definition.html:
+    method: unknown
+    evidence: no authorship recorded
+  docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf:
+    method: unknown
+    evidence: no authorship recorded
+  docs/arcbest-expedite-tms-api-definition.html:
+    method: unknown
+    evidence: no authorship recorded
+  docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf:
+    method: unknown
+    evidence: no authorship recorded
+  errors/arcbest-problem-types.yml:
+    method: searched
+    evidence: declared in the artifact
   examples/arcbest-api-address-example.json:
     method: unknown
     evidence: no authorship recorded
@@ -111,6 +138,15 @@ artifacts:
   json-schema/arcbest-api-tracking-status-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/arcbest-expedite-quote-request-model.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/arcbest-expedite-quote-response-model.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/arcbest-expedite-tracking-model.json:
+    method: unknown
+    evidence: no authorship recorded
   json-structure/arcbest-api-address-structure.json:
     method: unknown
     evidence: no authorship recorded
@@ -147,67 +183,7 @@ artifacts:
   json-structure/arcbest-api-tracking-status-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-23T094130.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-23T182523.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-26T223651.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-27T083119.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-27T190208.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T115055.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T170848.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T172558.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T192327.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-28T200725.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T133250.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T151044.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T162206.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-07-31T202106.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-01T163141.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-01T163302.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-01T171935.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-03T113057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-03T161012.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-04T083143.yml:
+  kin/checks-2026-09-04T062714.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-05T153418.yml:
@@ -294,6 +270,60 @@ artifacts:
   kin/score-2026-08-28T221322.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-29T213958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-29T230545.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-30T203505.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-30T220315.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-08-31T223420.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-01T063623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-01T210448.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-01T222808.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-02T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-02T224043.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-03T161828.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-03T174231.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-04T062714.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/arcbest-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
+  llms/arcbest-llms.txt:
+    method: unknown
+    evidence: no authorship recorded
+  mcp/arcbest-mcp.yml:
+    method: derived
+    evidence: declared in the artifact
+  openapi/arcbest-expedite-customer-api-openapi.yml:
+    method: derived
+    evidence: declared in the artifact
+  openapi/arcbest-expedite-tms-api-openapi.yml:
+    method: derived
+    evidence: declared in the artifact
   openapi/arcbest-pickups-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
@@ -306,8 +336,17 @@ artifacts:
   openapi/arcbest-tracking-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
-  plans/arcbest-plans-pricing.yml:
+  overlays/arcbest-expedite-customer-api-overlay.yaml:
     method: generated
+    evidence: declared in the artifact
+  overlays/arcbest-expedite-tms-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  packages/arcbest-packages.yml:
+    method: searched
+    evidence: declared in the artifact
+  plans/arcbest-plans-pricing.yml:
+    method: searched
     evidence: declared in the artifact
   press/2026-05-25-01-arcbest-sees-gains-in-operations-through-ai.md:
     method: unknown
@@ -325,13 +364,16 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   rate-limits/arcbest-rate-limits.yml:
-    method: generated
+    method: searched
     evidence: declared in the artifact
   rules/arcbest-jsonschema-spectral-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/arcbest-spectral-rules.yml:
     method: generated
+    evidence: declared in the artifact
+  sandbox/arcbest-sandbox.yml:
+    method: searched
     evidence: declared in the artifact
   search/2026-05-25-01-arcbest-sees-gains-in-operations-through-ai.md:
     method: unknown
@@ -351,6 +393,21 @@ artifacts:
   security/arcbest-domain-security.yml:
     method: unknown
     evidence: no authorship recorded
+  skills/_index.yml:
+    method: generated
+    evidence: declared in the artifact
+  skills/arcbest-quote-and-book-expedite-shipment.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/arcbest-tms-book-and-document-load.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/arcbest-track-expedite-shipment.md:
+    method: generated
+    evidence: declared in the artifact
   vocabulary/arcbest-vocabulary.yaml:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/arcbest-well-known.yml:
     method: unknown
     evidence: no authorship recorded

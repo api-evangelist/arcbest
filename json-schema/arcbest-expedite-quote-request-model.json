@@ -1,0 +1,148 @@
+{
+	"IsForcedUpdate": true,
+	"Quote": {
+		"ForceReQuote": true,
+		"QuoteRequest": {
+			"References": [
+				{
+					"Number": "string",
+					"ReferenceType": "string"
+				}
+			],
+			"Requester": {
+				"Name": "string",
+				"Phone": "string",
+				"Email": "string"
+			},
+			"Origin": {
+				"Address": {
+					"Name": "string",
+					"Attention": "string",
+					"Line1": "string",
+					"Line2": "string",
+					"Line3": "string",
+					"City": "string",
+					"State": "string",
+					"PostalCode": "string",
+					"Country": "string"
+				},
+				"ReadyDate": "2023-03-31T13:47:09.800Z",
+				"ByDate": "2023-03-31T13:47:09.800Z",
+				"Contacts": [
+					{
+						"Name": "string",
+						"Phone": "string",
+						"Email": "string"
+					}
+				],
+				"LocationType": "string",
+				"Notes": "string"
+			},
+			"Destination": {
+				"Address": {
+					"Name": "string",
+					"Attention": "string",
+					"Line1": "string",
+					"Line2": "string",
+					"Line3": "string",
+					"City": "string",
+					"State": "string",
+					"PostalCode": "string",
+					"Country": "string"
+				},
+				"ReadyDate": "2023-03-31T13:47:09.800Z",
+				"ByDate": "2023-03-31T13:47:09.800Z",
+				"Contacts": [
+					{
+						"Name": "string",
+						"Phone": "string",
+						"Email": "string"
+					}
+				],
+				"LocationType": "string",
+				"Notes": "string"
+			},
+			"PaymentType": "string",
+			"ShipUnits": [
+				{
+					"PieceCount": 0,
+					"PackageType": "string",
+					"Length": 0,
+					"Width": 0,
+					"Height": 0,
+					"Weight": 0,
+					"Class": "string",
+					"Commodity": "string",
+					"Note": "string",
+					"HazmatItem": {
+						"ProperShippingName": "string",
+						"Nos": "string",
+						"Class": "string",
+						"Id": "string",
+						"PackingGroup": "string",
+						"EmergencyPhone": "string"
+					},
+					"IsStackable": true
+				}
+			],
+			"StopOffs": [
+				{
+					"Address": {
+						"Name": "string",
+						"Attention": "string",
+						"Line1": "string",
+						"Line2": "string",
+						"Line3": "string",
+						"City": "string",
+						"State": "string",
+						"PostalCode": "string",
+						"Country": "string"
+					},
+					"ReadyDate": "2023-03-31T13:47:09.800Z",
+					"ByDate": "2023-03-31T13:47:09.800Z",
+					"SequenceNo": 0,
+					"LocationType": "string",
+					"Contacts": [
+						{
+							"Name": "string",
+							"Phone": "string",
+							"Email": "string"
+						}
+					],
+					"StopOffCode": "string",
+					"ShipUnits": [
+						{
+							"PieceCount": 0,
+							"PackageType": "string",
+							"Length": 0,
+							"Width": 0,
+							"Height": 0,
+							"Weight": 0,
+							"Class": "string",
+							"Commodity": "string",
+							"Note": "string",
+							"HazmatItem": {
+								"ProperShippingName": "string",
+								"Nos": "string",
+								"Class": "string",
+								"Id": "string",
+								"PackingGroup": "string",
+								"EmergencyPhone": "string"
+							},
+							"IsStackable": true
+						}
+					],
+					"AuthorizationNo": "string"
+				}
+			],
+			"TransportMode": "string",
+			"TruckType": "string",
+			"Questions": {},
+			"SpecialInstructions": "string",
+			"DeclaredValue": 0,
+			"ServiceLevel": "string"
+		},
+		"UnifiedQuoteNo": "string",
+		"RevisionNo": "string"
+	}
+}

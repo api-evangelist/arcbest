@@ -1,0 +1,126 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  ArcBest's own published surface - https://arcb.com/technology/shippers/EDI (EDI transaction sets
+  and downloadable ANSI X12 mapping specs), https://arcb.com/technology/shippers/API,
+  the Expedite API definition bundles under docs/, and
+  https://arcb.com/blog/going-the-extra-mile-with-information-security - plus live probes of
+  api.arcb.com on 2026-09-04.
+provider: ArcBest
+providerId: arcbest
+conformance:
+  - id: x12-edi
+    name: ANSI ASC X12 EDI
+    domain_standard: true
+    conforms: true
+    evidence: https://arcb.com/technology/shippers/EDI
+    detail: >-
+      ArcBest states "ArcBest supports these common EDI transaction sets using ANSI X12 in any
+      version" and publishes downloadable mapping specifications with sample data for each. This is
+      the domain standard for freight and logistics: a shipper or 3PL that already speaks X12 can
+      integrate without a bespoke connector.
+  - id: x12-204
+    name: ANSI X12 204 - Motor Carrier Load Tender
+    domain_standard: true
+    conforms: true
+    evidence: https://arcb.com/sites/www/files/2024-12/ArcBest-EDI-Specs-204.pdf
+    detail: >-
+      "For transmitting bills of lading and load tender information to carrier." Provider-published
+      mapping specification PDF, HTTP 200 probed 2026-09-04.
+  - id: x12-210
+    name: ANSI X12 210 - Motor Carrier Freight Details and Invoice
+    domain_standard: true
+    conforms: true
+    evidence: https://arcb.com/sites/www/files/2024-12/ArcBest-EDI-Specs-210.pdf
+    detail: >-
+      "For payment and auditing." Provider-published mapping specification PDF, HTTP 200 probed
+      2026-09-04.
+  - id: x12-214
+    name: ANSI X12 214 - Transportation Carrier Shipment Status Message
+    domain_standard: true
+    conforms: true
+    evidence: https://arcb.com/sites/www/files/2024-12/ArcBest-EDI-Specs-214.pdf
+    detail: >-
+      "For tracking, performance monitoring and in-transit shipment information." Provider-published
+      mapping specification PDF, HTTP 200 probed 2026-09-04.
+  - id: nmfc-freight-class
+    name: NMFTA NMFC freight classification
+    domain_standard: true
+    conforms: true
+    evidence: docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+    detail: >-
+      The published TMS quote request model carries FreightClass, NMFCNumber and NMFCSub per
+      commodity, and the customer quote model carries Class per ship unit - the NMFTA National Motor
+      Freight Classification scheme that LTL pricing is built on.
+  - id: dot-hazmat
+    name: DOT/PHMSA hazardous materials shipping description
+    domain_standard: true
+    conforms: true
+    evidence: json-schema/arcbest-expedite-quote-request-model.json
+    detail: >-
+      The provider-published quote request model carries a HazmatItem object with
+      ProperShippingName, Nos, Class, Id, PackingGroup and EmergencyPhone - the regulated hazmat
+      shipping description fields.
+  - id: nist-csf
+    name: NIST Cybersecurity Framework
+    domain_standard: false
+    conforms: true
+    evidence: https://arcb.com/blog/going-the-extra-mile-with-information-security
+    detail: >-
+      ArcBest states its information security program is aligned with and assessed against the NIST
+      Framework for Improving Critical Infrastructure Cybersecurity, and that it works with the NMFTA
+      and AUTO-ISAC. Stated on ArcBest's own site (HTTP 200 probed 2026-09-04). This is a
+      self-declared alignment, not an audited certification.
+  - id: bearer-token
+    name: HTTP Bearer authentication (RFC 6750)
+    domain_standard: false
+    conforms: true
+    evidence: docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf
+    detail: >-
+      "The API uses standard bearer authentication" - pass the access token with the Authorization
+      header set to "Bearer <accesstoken>".
+  - id: http-basic
+    name: HTTP Basic authentication (RFC 7617)
+    domain_standard: false
+    conforms: true
+    evidence: https://api.arcb.com/expedite/digital/
+    detail: >-
+      Probed 2026-09-04 - HTTP 401 with a WWW-Authenticate header of `Basic realm="service"`,
+      matching the TMS instructions PDF.
+  - id: oauth2
+    name: OAuth 2.0
+    domain_standard: false
+    conforms: false
+    evidence: docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf
+    detail: >-
+      NOT OAuth 2.0. The Customer API's /authorize is a bespoke JSON credential exchange
+      (POST {ClientId, ClientSecret} -> {AccessToken}); it does not use the OAuth token endpoint
+      contract, grant_type, scopes or discovery, and no /.well-known/oauth-authorization-server is
+      served on any ArcBest host (all 404, see well-known/arcbest-well-known.yml).
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    domain_standard: false
+    conforms: false
+    evidence: docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+    detail: >-
+      Errors are returned inside the 200 response envelope as an `Errors[]` array of
+      {Code, Message} objects, not as application/problem+json.
+  - id: openapi
+    name: OpenAPI Specification
+    domain_standard: false
+    conforms: false
+    evidence: https://api.arcb.com/expedite/digital/swagger/v1/swagger.json
+    detail: >-
+      ArcBest generates its published API reference with Swagger Codegen, so a Swagger/OpenAPI
+      document demonstrably exists internally, but it is not published: the swagger endpoints answer
+      HTTP 401 (probed 2026-09-04) and no anonymous /openapi.json, /swagger.json or /api-docs is
+      served on arcb.com, api.arcb.com or test.api.arcb.com.
+  - id: asyncapi
+    name: AsyncAPI
+    domain_standard: false
+    conforms: false
+    evidence: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+    detail: >-
+      ArcBest operates a real push surface (Track and Trace posts order history to an endpoint the
+      integrator registers) but publishes no AsyncAPI document for it. Captured as a webhook catalog
+      instead - see asyncapi/arcbest-track-and-trace-webhooks.yml.

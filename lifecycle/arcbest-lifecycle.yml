@@ -1,0 +1,85 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  ArcBest's published API pages and Expedite documentation bundles, plus live probes on 2026-09-04 of
+  status.arcb.com (DNS NXDOMAIN), https://arcb.com/status (404) and the ArcBest sitemap.
+provider: ArcBest
+providerId: arcbest
+versioning:
+  scheme: document-dated, unversioned URL
+  current_version: v1
+  version_in_url: false
+  version_header: null
+  detail: >-
+    Both published Expedite definitions declare Version v1 and neither base URL carries a version
+    segment. There is no version header and no content-negotiated version. Change reaches integrators
+    through a re-dated documentation bundle on
+    https://arcb.com/technology/shippers/API/expedite-setup-documentation-download - "Customer
+    Expedite Quote and Book Instructions and JSON Examples, last updated August 7, 2024" and
+    "Expedite TMS Quote and Book Instructions and JSON Examples, last updated August 8, 2025". A
+    consumer has no way to pin a version, and no way to be told a breaking change is coming other
+    than noticing the date on a download page.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  detail: >-
+    No deprecation policy, no notice period, and no RFC 8594 Sunset or Deprecation headers are
+    published or observed. No operation in either published definition is marked deprecated.
+sla:
+  published: false
+  detail: >-
+    No API-level SLA, uptime commitment or support-response target is published. ArcBest publishes
+    SERVICE performance claims for the underlying freight product (a 98.5% on-time success rate for
+    ground expedite, https://arcb.com/shippers/solutions/time-sensitive/expedite) - a transport
+    metric, not an API availability commitment. Do not read one as the other.
+status_page:
+  published: false
+  url: null
+  evidence:
+    - url: https://status.arcb.com/
+      status: 0
+      note: DNS does not resolve (NXDOMAIN), probed 2026-09-04.
+    - url: https://arcb.com/status
+      status: 404
+      note: Probed 2026-09-04.
+  detail: ArcBest operates no public API status page. No StatusPage pointer is emitted.
+changelog:
+  published: false
+  url: null
+  detail: >-
+    No dated API changelog. The only change signal is the "last updated" date on the documentation
+    download page.
+support:
+  channels:
+    - type: email
+      value: api@arcb.com
+      scope: API access and credentials
+      evidence: https://support.arcb.com/en/articles/2851223-api-access
+    - type: email
+      value: edi@arcb.com
+      scope: EDI integrations and trading partner setup
+      evidence: https://arcb.com/technology/shippers/EDI
+    - type: help-center
+      value: https://support.arcb.com/en
+      scope: General product support (hosted Intercom)
+    - type: sales
+      value: https://arcb.com/contact-us/connect-with-sales
+      scope: New customers - API access is gated behind a sales conversation
+maturity:
+  stage: production
+  detail: >-
+    Both Expedite surfaces are live and credential-gated in production
+    (https://api.arcb.com/expedite/customer/authorize returns 405 to GET, confirming a live POST-only
+    endpoint; https://api.arcb.com/expedite/digital/ returns 401 with a Basic challenge). Probed
+    2026-09-04.
+notes:
+  - >-
+    Historical caution for this record - the four AE-authored scaffold specifications still in
+    openapi/ (arcbest-rates-api, arcbest-shipments-api, arcbest-tracking-api, arcbest-pickups-api,
+    each marked x-generated-from: documentation) declare a server of https://api.arcbest.com/v2. That
+    host does NOT resolve (DNS NXDOMAIN, probed 2026-09-04). ArcBest's real API host is
+    api.arcb.com. Those scaffolds were not repaired to point at the real host, because their paths
+    are not ArcBest's published paths - retargeting invented operations at a live host would be worse
+    than leaving them visibly marked as authored.

@@ -1,0 +1,52 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the ArcBest Expedite Customer API
+  version: 1.0.0
+extends: ../openapi/arcbest-expedite-customer-api-openapi.yml
+x-generated: '2026-09-04'
+x-method: generated
+x-source: >-
+  Captures the API Evangelist annotations applied on top of the derived ArcBest Expedite Customer API
+  contract - provenance, agent-consequence classification, and the runtime facts observed by probe
+  rather than stated in ArcBest's documentation. The underlying OpenAPI is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provenance:
+        derived_from: ArcBest's own publicly downloadable Expedite API definition bundle (Swagger-Codegen HTML + instructions PDF)
+        bundle: https://arcb.com/sites/default/files/API/Arcbest-Expedite-Customer-Quoting-Booking-API-2024-8.zip
+        verbatim_copies:
+          - docs/arcbest-expedite-customer-api-definition.html
+          - docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf
+        live_spec_status: auth-gated (HTTP 401 on swagger endpoints, probed 2026-09-04)
+      x-apievangelist-agent-readiness:
+        idempotency: none
+        reversibility: none
+        dry_run: sandbox host only (test.api.arcb.com)
+        onboarding: credentials issued by ArcBest support, not self-serve
+  - target: $.paths['/quotes/booking-request/expedite'].post
+    update:
+      x-agentic-consequence: physical
+      x-apievangelist-note: >-
+        Tenders a physical freight movement. No idempotency key and no cancel operation exist. A
+        duplicate call is a duplicate truck, and ArcBest's booking request terms charge a truck
+        ordered but not used fee for a cancellation inside 24 hours of scheduled pickup. Poll
+        /quotes/booking-request/status before re-sending.
+  - target: $.paths['/quotes/booking-request/time-critical-forwarding'].post
+    update:
+      x-agentic-consequence: physical
+      x-apievangelist-note: Same replay and reversal exposure as the expedite booking request.
+  - target: $.paths['/quotes/booking-request/status'].get
+    update:
+      x-apievangelist-note: >-
+        The only replay guard available on this API. Check the status of an existing quote number
+        before re-tendering a booking.
+      x-apievangelist-status-values: [Quoted, Booking, Booking in Progress, Shipment Booked, Unable to Fulfill, Unknown]
+  - target: $.paths['/authorize'].post
+    update:
+      x-apievangelist-probe:
+        url: https://api.arcb.com/expedite/customer/authorize
+        method: GET
+        status: 405
+        checked: '2026-09-04'
+        note: Method Not Allowed confirms a live POST-only endpoint.

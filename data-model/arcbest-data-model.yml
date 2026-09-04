@@ -1,0 +1,147 @@
+generated: '2026-09-04'
+method: derived
+source: >-
+  Derived from ArcBest's own published JSON models
+  (json-schema/arcbest-expedite-quote-request-model.json,
+  json-schema/arcbest-expedite-quote-response-model.json,
+  json-schema/arcbest-expedite-tracking-model.json) and the worked payloads in
+  docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf and
+  docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf. Field names are verbatim from those
+  documents.
+provider: ArcBest
+providerId: arcbest
+identifiers:
+  - name: UnifiedQuoteNo / ExpediteQuoteId
+    format: 'P000-prefixed string, e.g. P0004373364'
+    entity: Quote
+    detail: The quote identifier. A booking request is placed against this plus a ResponseNo.
+  - name: ExpediteOrderNo
+    format: 'yyyymm-prefixed numeric string, e.g. 20230182865'
+    entity: Order
+    detail: Returned once a booking reaches SHIPMENTBOOKED. Doubles as the BOL number and is the key for GET /order/bol/{expediteOrderNo}.
+  - name: ArcBestOrderNo
+    format: 'numeric string, e.g. 433672787'
+    entity: Order
+    detail: The ArcBest pro number. Key for POST /order/refs/{arcbOrderNo}.
+  - name: ProNumber
+    format: string
+    entity: Shipment
+    detail: Shipment pro number used in tracking responses.
+entities:
+  - name: Quote
+    description: A priced expedite offer with transit and pickup timing. Costs nothing and reserves nothing.
+    fields: [UnifiedQuoteNo, ExpediteQuoteId, Charge, AdvertisedTransitDays, AdvertisedDueDate, PickupDate, ItemizedCharges, Notes, Errors, Products.ExpediteOptions]
+  - name: QuoteRequest
+    description: The inbound quote payload.
+    fields: [References, Requester, Origin, Destination, PaymentType, ShipUnits, StopOffs, Accessorials, Commodities, NotifyBeforeDelivery]
+  - name: BookingRequest
+    description: A tender placed against a quote. Queued for operator verification, not booked on receipt.
+    fields: [UnifiedQuoteNo, ResponseNo, Shipper, Consignee, contacts, pickup/delivery windows]
+  - name: BookingStatus
+    description: The asynchronous outcome of a booking request, keyed by quote id.
+    fields: [Status, StatusString, ExpediteOrderNo, ArcBestOrderNo]
+    enum_statusstring: [QUOTED, BOOKING, BOOKINGINPROGRESS, SHIPMENTBOOKED, UNABLETOFULFILL, UNKNOWN]
+  - name: Order
+    description: A booked expedite shipment. Carries the BOL.
+    fields: [ExpediteOrderNo, ArcBestOrderNo, Bol, References]
+  - name: Reference
+    description: A customer-supplied identifier carried on the BOL.
+    fields: [type, value, Number, ReferenceType]
+    enum_type: [PO, CUSTREF]
+  - name: Address
+    description: A postal location. 2-character state, 5-digit postal code, 3-character country ("USA").
+    fields: [Name, Attention, AttentionTo, Line1, Line2, Line3, City, State, PostalCode, Country]
+  - name: Stop
+    description: Origin, Destination or StopOff. Carries a ready/by time window and contacts.
+    fields: [Address, ReadyDate, ByDate, Contacts, LocationType, SequenceNo, StopOffCode, Notes, AccessorialCol]
+  - name: Contact
+    description: A person reachable about a stop or a quote.
+    fields: [Name, Title, Phone, Fax, Email]
+  - name: ShipUnit
+    description: A handling unit on the shipment. Called Commodity on the TMS API.
+    fields: [PieceCount, PackageType, Length, Width, Height, Weight, Class, FreightClass, NMFCNumber, NMFCSub, Commodity, Note, IsStackable, Quantity]
+  - name: HazmatItem
+    description: Regulated hazardous materials shipping description attached to a ship unit.
+    fields: [ProperShippingName, Nos, Class, Id, PackingGroup, EmergencyPhone]
+  - name: Accessorial
+    description: An additional service on the load (temperature control, lift gate, hazmat).
+    fields: [Code, Quantity]
+  - name: Shipment
+    description: The tracked movement. Root of the track-and-trace payload.
+    fields: [ProNumber, ProductType, ServiceLevel, CustomerNo, OrderDate, TimeZone, ContactName, Phone, TransportMode, ShipmentIdentifiers, Shipper, Consignee, ThirdParty]
+  - name: StatusUpdate
+    description: One milestone or location ping in the shipment history.
+    fields: [ShipmentStatus, StatusCode, StopType, Timestamp]
+  - name: Party
+    description: Shipper, Consignee or ThirdParty on a tracked shipment.
+    fields: [Account, CompanyName, CompanyNamePlus, RulesCircularType, RulesCircularHtml, Location]
+relationships:
+  - from: QuoteRequest
+    to: Stop
+    type: has_many
+    via: Origin, Destination, StopOffs[]
+  - from: Stop
+    to: Address
+    type: has_one
+    via: Address
+  - from: Stop
+    to: Contact
+    type: has_many
+    via: Contacts[]
+  - from: QuoteRequest
+    to: ShipUnit
+    type: has_many
+    via: ShipUnits[] (Commodities[] on the TMS API)
+  - from: ShipUnit
+    to: HazmatItem
+    type: has_one
+    via: HazmatItem
+  - from: QuoteRequest
+    to: Accessorial
+    type: has_many
+    via: Accessorials[], AccessorialCol[]
+  - from: QuoteRequest
+    to: Reference
+    type: has_many
+    via: References[]
+  - from: Quote
+    to: QuoteRequest
+    type: has_one
+    via: Quote.QuoteRequest
+  - from: BookingRequest
+    to: Quote
+    type: belongs_to
+    via: UnifiedQuoteNo + ResponseNo
+  - from: BookingStatus
+    to: Quote
+    type: belongs_to
+    via: quote id key
+  - from: BookingStatus
+    to: Order
+    type: has_one
+    via: ExpediteOrderNo + ArcBestOrderNo
+  - from: Order
+    to: Reference
+    type: has_many
+    via: POST /order/refs/{arcbOrderNo}
+  - from: Shipment
+    to: Party
+    type: has_many
+    via: Shipper, Consignee, ThirdParty
+  - from: Party
+    to: Address
+    type: has_one
+    via: Location
+  - from: Shipment
+    to: StatusUpdate
+    type: has_many
+    via: StatusUpdates[]
+  - from: Shipment
+    to: Order
+    type: belongs_to
+    via: expediteOrderNo / arcbestOrderNo
+note: >-
+  The quote-to-order handoff is the load-bearing join and it changes key twice - a client holds a
+  P000 quote id, receives an ExpediteOrderNo and an ArcBestOrderNo on booking, then must use
+  ExpediteOrderNo for the BOL and ArcBestOrderNo for reference updates. Getting the two order numbers
+  the wrong way round is the most likely integration error on this surface.

@@ -1,0 +1,54 @@
+{
+	"IsForcedUpdate": true,
+	"Quote": {
+		"ForceReQuote": true,
+		"QuoteResponse": {
+			"Products": {
+				"TimeCriticalForwardingOptions": [
+					{
+						"QuoteResponseNo": "string",
+						"ServiceLevel": "string",
+						"ServiceLevelLongName": "string",
+						"QuotedForKnownShipper": true,
+						"Guaranteed": true,
+						"TotalSellPrice": 0,
+						"Origin": {
+							"ByDate": "2023-03-31T15:35:36.769Z",
+							"TimeZoneByDate": "string",
+							"ReadyDate": "2023-03-31T15:35:36.769Z",
+							"TimeZoneReadyDate": "string"
+						},
+						"Destination": {
+							"ByDate": "2023-03-31T15:35:36.769Z",
+							"TimeZoneByDate": "string",
+							"ReadyDate": "2023-03-31T15:35:36.769Z",
+							"TimeZoneReadyDate": "string"
+						},
+						"ExpirationDate": "2023-03-31T15:35:36.769Z",
+						"ExpirationTimeZone": "string",
+						"IsPreferredRoute": true,
+						"AllowedToBook": true
+					}
+				],
+				"ExpediteOptions": [
+					{
+						"PickupReadyDate": "2023-03-31T15:35:36.769Z",
+						"TimeZonePickupReadyDate": "string",
+						"PickupByDate": "2023-03-31T15:35:36.769Z",
+						"TimeZonePickupByDate": "string",
+						"DeliveryReadyDate": "2023-03-31T15:35:36.769Z",
+						"TimeZoneDeliveryReadyDate": "string",
+						"DeliveryByDate": "2023-03-31T15:35:36.769Z",
+						"TimeZoneDeliveryByDate": "string",
+						"QuoteResponseNo": "string",
+						"TotalSellPrice": 0,
+						"IsPreferedRoute": true,
+						"AllowedToBook": true
+					}
+				]
+			}
+		},
+		"UnifiedQuoteNo": "string",
+		"RevisionNo": "string"
+	}
+}
