@@ -119,25 +119,16 @@ apis:
     url: openapi/arcbest-tracking-api-openapi.yml
   - type: Documentation
     url: https://arcb.com/technology/shippers/API
-- aid: arcbest:arcbest-expedite-customer-api
-  name: ArcBest Expedite Customer API
-  description: Quote, book and track ArcBest Expedite (Panther Premium Logistics) time-critical
-    freight directly from a shipper's own application. Client-credential authorize call returns a
-    bearer token; quotes are submitted, booking requests are queued for an ArcBest operator, booking
-    status is polled, and booked shipments are searched by reference number.
+- aid: arcbest:arcbest-authorize-api
+  name: ArcBest Authorize API
+  description: Exchange a ClientId and ClientSecret for a bearer access token.
   humanURL: https://arcb.com/technology/shippers/API
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
-  baseURL: https://api.arcb.com/expedite/customer
+  baseURL: https://api.arcb.com
   tags:
-  - Expedite
-  - Quotes
-  - Booking
-  - Tracking
+  - Authorize
   properties:
   - type: OpenAPI
-    url: openapi/arcbest-expedite-customer-api-openapi.yml
-  - type: Overlay
-    url: overlays/arcbest-expedite-customer-api-overlay.yaml
+    url: openapi/arcbest-authorize-api-openapi.yml
   - type: Documentation
     url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
   - type: APIReference
@@ -148,38 +139,111 @@ apis:
     url: sandbox/arcbest-sandbox.yml
   - type: ErrorCatalog
     url: errors/arcbest-problem-types.yml
-- aid: arcbest:arcbest-expedite-tms-api
-  name: ArcBest Expedite Third Party TMS API
-  description: The integration surface ArcBest publishes for transportation management systems and
-    freight-visibility platforms. HTTP Basic authenticated; quote, book, poll booking status,
-    retrieve the Bill of Lading and update PO/CUSTREF references on a booked order, with track-and-trace
-    milestones pushed to an endpoint the integrator registers with ArcBest.
-  humanURL: https://arcb.com/technology/shippers/API
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/arcbest.png
-  baseURL: https://api.arcb.com/expedite/digital
-  tags:
-  - Expedite
-  - TMS
-  - Booking
-  - Bill of Lading
-  properties:
-  - type: OpenAPI
-    url: openapi/arcbest-expedite-tms-api-openapi.yml
-  - type: Overlay
-    url: overlays/arcbest-expedite-tms-api-overlay.yaml
-  - type: Documentation
-    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
   - type: APIReference
     url: docs/arcbest-expedite-tms-api-definition.html
   - type: Webhooks
     url: asyncapi/arcbest-track-and-trace-webhooks.yml
+- aid: arcbest:arcbest-booking-api
+  name: ArcBest Booking API
+  description: Booking requests placed against a quote, and their asynchronous status.
+  humanURL: https://arcb.com/technology/shippers/API
+  baseURL: https://api.arcb.com
+  tags:
+  - Booking
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-booking-api-openapi.yml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: APIReference
+    url: docs/arcbest-expedite-customer-api-definition.html
   - type: Authentication
     url: authentication/arcbest-authentication.yml
   - type: Sandbox
     url: sandbox/arcbest-sandbox.yml
   - type: ErrorCatalog
     url: errors/arcbest-problem-types.yml
+  - type: APIReference
+    url: docs/arcbest-expedite-tms-api-definition.html
+  - type: Webhooks
+    url: asyncapi/arcbest-track-and-trace-webhooks.yml
+- aid: arcbest:arcbest-order-api
+  name: ArcBest Order API
+  description: Bill of Lading retrieval and reference-number updates on a booked order.
+  humanURL: https://arcb.com/technology/shippers/API
+  baseURL: https://api.arcb.com
+  tags:
+  - Order
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-order-api-openapi.yml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: APIReference
+    url: docs/arcbest-expedite-customer-api-definition.html
+  - type: Authentication
+    url: authentication/arcbest-authentication.yml
+  - type: Sandbox
+    url: sandbox/arcbest-sandbox.yml
+  - type: ErrorCatalog
+    url: errors/arcbest-problem-types.yml
+  - type: APIReference
+    url: docs/arcbest-expedite-tms-api-definition.html
+  - type: Webhooks
+    url: asyncapi/arcbest-track-and-trace-webhooks.yml
+- aid: arcbest:arcbest-quote-api
+  name: ArcBest Quote API
+  description: Rate quote requests for expedite loads.
+  humanURL: https://arcb.com/technology/shippers/API
+  baseURL: https://api.arcb.com
+  tags:
+  - Quote
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-quote-api-openapi.yml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: APIReference
+    url: docs/arcbest-expedite-customer-api-definition.html
+  - type: Authentication
+    url: authentication/arcbest-authentication.yml
+  - type: Sandbox
+    url: sandbox/arcbest-sandbox.yml
+  - type: ErrorCatalog
+    url: errors/arcbest-problem-types.yml
+  - type: APIReference
+    url: docs/arcbest-expedite-tms-api-definition.html
+  - type: Webhooks
+    url: asyncapi/arcbest-track-and-trace-webhooks.yml
+- aid: arcbest:arcbest-quotes-api
+  name: ArcBest Quotes API
+  description: Submit expedite rate quotes, request bookings against them, and poll booking status.
+  humanURL: https://arcb.com/technology/shippers/API
+  baseURL: https://api.arcb.com
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/arcbest-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - type: APIReference
+    url: docs/arcbest-expedite-customer-api-definition.html
+  - type: Authentication
+    url: authentication/arcbest-authentication.yml
+  - type: Sandbox
+    url: sandbox/arcbest-sandbox.yml
+  - type: ErrorCatalog
+    url: errors/arcbest-problem-types.yml
+  - type: APIReference
+    url: docs/arcbest-expedite-tms-api-definition.html
+  - type: Webhooks
+    url: asyncapi/arcbest-track-and-trace-webhooks.yml
 common:
+  - type: Overlay
+    url: overlays/arcbest-expedite-customer-api-overlay.yaml
+  - type: Overlay
+    url: overlays/arcbest-expedite-tms-api-overlay.yaml
   - type: Website
     url: https://arcb.com/
   - type: OpenAPI
