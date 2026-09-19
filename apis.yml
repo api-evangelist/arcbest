@@ -197,6 +197,8 @@ apis:
   humanURL: https://arcb.com/technology/shippers/API
   baseURL: https://api.arcb.com
   tags:
+  - Quotes
+  tags_raw:
   - Quote
   properties:
   - type: OpenAPI
