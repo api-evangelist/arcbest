@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: ArcBest Expedite Third Party TMS Order API
+  version: v1
+  summary: Quote, book, document and reference ArcBest Expedite loads from a third-party TMS.
+  description: The ArcBest Expedite 3rd Party TMS API is the integration surface ArcBest publishes for transportation management systems and freight-visibility platforms (the published examples use project44 as the calling Source).
+  contact:
+    name: ArcBest API Support
+    email: api@arcb.com
+    url: https://arcb.com/technology/shippers/API
+  termsOfService: https://arcb.com/terms-of-use
+  x-generated-from: provider-published Swagger-Codegen HTML reference + provider PDF instructions
+  x-method: derived
+  x-source:
+  - https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - https://arcb.com/sites/default/files/API/ArcBest-Expedite-Digital-API-August-2024.zip
+  - docs/arcbest-expedite-tms-api-definition.html
+  - docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  x-derived-on: '2026-09-04'
+servers:
+- url: https://api.arcb.com/expedite/digital
+  description: Production. Probed 2026-09-04 - returns HTTP 401 with a `WWW-Authenticate` header of `Basic realm="service"`, confirming the gateway is live and HTTP Basic authenticated.
+- url: https://test.api.arcb.com/expedite/digital
+  description: Test / sandbox. "API top level URI is https://test.api.arcb.com/Expedite/Digital/" - ArcBest TMS instructions PDF, August 2024. Every curl sample in the provider's own HTML reference targets this host.
+security:
+- basicAuth: []
+tags:
+- name: Order
+  description: Bill of Lading retrieval and reference-number updates on a booked order.
+paths:
+  /order/bol/{expediteOrderNo}:
+    get:
+      operationId: orderBol
+      summary: Retrieve the Bill of Lading for a booked order
+      description: Use the expedite order BOL number from the booking status step after the shipment is booked.
+      tags:
+      - Order
+      parameters:
+      - name: expediteOrderNo
+        in: path
+        required: true
+        description: The expedite order number returned by /booking/status, which serves as the BOL number.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /order/refs/{arcbOrderNo}:
+    post:
+      operationId: orderUpdateRefs
+      summary: Update purchase order and customer reference numbers on a booked order
+      description: Call the order reference endpoint to update purchase order (PO) numbers or customer references (CUSTREFs) on the BOL. The body is an array of {type, value} objects where type is "PO" or "CUSTREF".
+      tags:
+      - Order
+      parameters:
+      - name: arcbOrderNo
+        in: path
+        required: true
+        description: The ArcBest order (pro) number.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: Reference type. Published values are PO and CUSTREF.
+                  value:
+                    type: string
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic. "Request basic authentication username and password from the ArcBest Expedite team" - ArcBest TMS instructions PDF. Confirmed live 2026-09-04, the gateway answers a `WWW-Authenticate` header of `Basic realm="service"`.

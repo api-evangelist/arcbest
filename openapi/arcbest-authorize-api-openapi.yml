@@ -1,0 +1,69 @@
+openapi: 3.2.0
+info:
+  title: ArcBest Expedite Customer Authorize API
+  version: v1
+  summary: Quote, book and track ArcBest Expedite (Panther Premium Logistics) time-critical freight.
+  description: The ArcBest Expedite Customer API lets a shipper request an expedite rate quote, submit a booking request against a returned quote, poll the booking status until an ArcBest operator confirms it, and search booked shipments by reference number.
+  contact:
+    name: ArcBest API Support
+    email: api@arcb.com
+    url: https://arcb.com/technology/shippers/API
+  termsOfService: https://arcb.com/terms-of-use
+  x-generated-from: provider-published Swagger-Codegen HTML reference + provider PDF instructions
+  x-method: derived
+  x-source:
+  - https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - https://arcb.com/sites/default/files/API/Arcbest-Expedite-Customer-Quoting-Booking-API-2024-8.zip
+  - docs/arcbest-expedite-customer-api-definition.html
+  - docs/arcbest-expedite-customer-quote-book-instructions-2024-08.pdf
+  x-derived-on: '2026-09-04'
+servers:
+- url: https://api.arcb.com/expedite/customer
+  description: Production. Stated verbatim in the ArcBest customer instructions PDF ("post your client id and secret to https://api.arcb.com/expedite/customer/authorize"). GET on /authorize returns HTTP 405 Method Not Allowed, probed 2026-09-04, confirming the endpoint is live and POST-only.
+- url: https://test.api.arcb.com/expedite/customer
+  description: Test / sandbox. "We prefer that you begin integration against the test URI https://test.api.arcb.com/expedite/customer/" - ArcBest customer instructions PDF, August 2024.
+security:
+- bearerAuth: []
+tags:
+- name: Authorize
+  description: Exchange a ClientId and ClientSecret for a bearer access token.
+paths:
+  /authorize:
+    post:
+      operationId: authorizePost
+      summary: Exchange client credentials for an access token
+      description: 'POST the ClientId (32 characters) and ClientSecret (64 characters) issued by ArcBest support. Returns an access token of roughly 1000 characters, to be sent on every other call as `Authorization: Bearer `.'
+      tags:
+      - Authorize
+      security: []
+      requestBody:
+        required: true
+        description: Client credentials issued by ArcBest support.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ClientId:
+                  type: string
+                  description: 32-character client identifier issued by ArcBest support.
+                ClientSecret:
+                  type: string
+                  description: 64-character client secret issued by ArcBest support.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  AccessToken:
+                    type: string
+                    description: Bearer access token, approximately 1000 characters.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token returned by POST /authorize, sent as `Authorization: Bearer <accesstoken>`. Credentials (ClientId/ClientSecret) are issued by ArcBest support, not self-serve.'

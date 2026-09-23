@@ -1,7 +1,9 @@
 ---
 title: ArcBest Highlights Strategic Pillars and Long-Term ...
 url: https://www.businesswire.com/news/home/20250929578216/en/ArcBest-Highlights-Strategic-Pillars-and-Long-Term-Financial-Targets-at-2025-Investor-Day
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"ArcBest" press release artificial intelligence'
 position: 5
 source: serpapi-google

@@ -1,0 +1,72 @@
+openapi: 3.2.0
+info:
+  title: ArcBest Expedite Third Party TMS Booking API
+  version: v1
+  summary: Quote, book, document and reference ArcBest Expedite loads from a third-party TMS.
+  description: The ArcBest Expedite 3rd Party TMS API is the integration surface ArcBest publishes for transportation management systems and freight-visibility platforms (the published examples use project44 as the calling Source).
+  contact:
+    name: ArcBest API Support
+    email: api@arcb.com
+    url: https://arcb.com/technology/shippers/API
+  termsOfService: https://arcb.com/terms-of-use
+  x-generated-from: provider-published Swagger-Codegen HTML reference + provider PDF instructions
+  x-method: derived
+  x-source:
+  - https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - https://arcb.com/sites/default/files/API/ArcBest-Expedite-Digital-API-August-2024.zip
+  - docs/arcbest-expedite-tms-api-definition.html
+  - docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  x-derived-on: '2026-09-04'
+servers:
+- url: https://api.arcb.com/expedite/digital
+  description: Production. Probed 2026-09-04 - returns HTTP 401 with a `WWW-Authenticate` header of `Basic realm="service"`, confirming the gateway is live and HTTP Basic authenticated.
+- url: https://test.api.arcb.com/expedite/digital
+  description: Test / sandbox. "API top level URI is https://test.api.arcb.com/Expedite/Digital/" - ArcBest TMS instructions PDF, August 2024. Every curl sample in the provider's own HTML reference targets this host.
+security:
+- basicAuth: []
+tags:
+- name: Booking
+  description: Booking requests placed against a quote, and their asynchronous status.
+paths:
+  /booking:
+    put:
+      operationId: bookingCreate
+      summary: Book a quoted expedite load
+      description: After showing the customer the quote response information (quote id, pricing, schedule dates, notes), if they wish to book, send the booking request from your client.
+      tags:
+      - Booking
+      requestBody:
+        required: true
+        description: Booking request.
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+  /booking/status:
+    get:
+      operationId: bookingGetStatus
+      summary: Get booking status for one or more quotes
+      description: Quotes are queued and booked by ArcBest operators within minutes. Poll this operation to update your UI. The response is keyed by quote id and carries Status, StatusString (for example BOOKINGINPROGRESS, SHIPMENTBOOKED), ExpediteOrderNo and ArcBestOrderNo.
+      tags:
+      - Booking
+      parameters:
+      - name: quoteids
+        in: query
+        required: true
+        description: One or more quote ids. Repeat the parameter per quote id.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic. "Request basic authentication username and password from the ArcBest Expedite team" - ArcBest TMS instructions PDF. Confirmed live 2026-09-04, the gateway answers a `WWW-Authenticate` header of `Basic realm="service"`.

@@ -1,0 +1,53 @@
+openapi: 3.2.0
+info:
+  title: ArcBest Expedite Third Party TMS Quote API
+  version: v1
+  summary: Quote, book, document and reference ArcBest Expedite loads from a third-party TMS.
+  description: The ArcBest Expedite 3rd Party TMS API is the integration surface ArcBest publishes for transportation management systems and freight-visibility platforms (the published examples use project44 as the calling Source).
+  contact:
+    name: ArcBest API Support
+    email: api@arcb.com
+    url: https://arcb.com/technology/shippers/API
+  termsOfService: https://arcb.com/terms-of-use
+  x-generated-from: provider-published Swagger-Codegen HTML reference + provider PDF instructions
+  x-method: derived
+  x-source:
+  - https://arcb.com/technology/shippers/API/expedite-setup-documentation-download
+  - https://arcb.com/sites/default/files/API/ArcBest-Expedite-Digital-API-August-2024.zip
+  - docs/arcbest-expedite-tms-api-definition.html
+  - docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf
+  x-derived-on: '2026-09-04'
+servers:
+- url: https://api.arcb.com/expedite/digital
+  description: Production. Probed 2026-09-04 - returns HTTP 401 with a `WWW-Authenticate` header of `Basic realm="service"`, confirming the gateway is live and HTTP Basic authenticated.
+- url: https://test.api.arcb.com/expedite/digital
+  description: Test / sandbox. "API top level URI is https://test.api.arcb.com/Expedite/Digital/" - ArcBest TMS instructions PDF, August 2024. Every curl sample in the provider's own HTML reference targets this host.
+security:
+- basicAuth: []
+tags:
+- name: Quote
+  description: Rate quote requests for expedite loads.
+paths:
+  /quote:
+    post:
+      operationId: quoteCreate
+      summary: Create a rate quote
+      description: Send a rate quote request to retrieve initial pricing and timing availability. Errors may include dimensions or weight beyond limits, incompatible scheduling, or rejected accessorials (temperature control, lift gate, hazmat). The response includes the earliest available pickup - show this to the customer in case they initially selected a time that is too early.
+      tags:
+      - Quote
+      requestBody:
+        required: true
+        description: Quote request (Source, UserName, ArcBestCustomerId, Payer, Shipper, Consignee, PickupDate, Commodities[], Accessorials[]).
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK. Carries ExpediteQuoteId, Charge, AdvertisedTransitDays, AdvertisedDueDate, PickupDate, ItemizedCharges, Notes and an Errors array which is empty on success and populated with {Code, Message} objects on a rejected quote.
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic. "Request basic authentication username and password from the ArcBest Expedite team" - ArcBest TMS instructions PDF. Confirmed live 2026-09-04, the gateway answers a `WWW-Authenticate` header of `Basic realm="service"`.

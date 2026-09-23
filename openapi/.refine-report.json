@@ -1,26 +1,44 @@
 {
   "provider": "arcbest",
   "sources": [
-    "arcbest-pickups-api-openapi.yml",
-    "arcbest-rates-api-openapi.yml",
-    "arcbest-shipments-api-openapi.yml",
-    "arcbest-tracking-api-openapi.yml"
+    "_ae-authored/arcbest-api.yaml",
+    "arcbest-authorize-api-openapi.yml",
+    "arcbest-booking-api-openapi.yml",
+    "arcbest-order-api-openapi.yml",
+    "arcbest-quote-api-openapi.yml",
+    "arcbest-quotes-api-openapi.yml",
+    "arcbest-shipments-api-openapi.yml"
   ],
   "outputs": [
     "arcbest-pickups-api-openapi.yml",
     "arcbest-rates-api-openapi.yml",
     "arcbest-shipments-api-openapi.yml",
-    "arcbest-tracking-api-openapi.yml"
+    "arcbest-tracking-api-openapi.yml",
+    "arcbest-authorize-api-openapi.yml",
+    "arcbest-booking-api-openapi.yml",
+    "arcbest-order-api-openapi.yml",
+    "arcbest-quote-api-openapi.yml",
+    "arcbest-quotes-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "arcbest-authorize-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /authorize post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "arcbest-booking-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /booking put, /booking/status get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "arcbest-order-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /order/bol/{expediteOrderNo} get, /order/refs/{arcbOrderNo} post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "arcbest-quote-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /quote post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "arcbest-quotes-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /quotes post, /quotes/booking-request/expedite post, /quotes/booking-request/status get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "arcbest-shipments-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /shipments/search post, /shipments/status-codes get); its other 2 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
-    "arcbest-pickups-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "arcbest-rates-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "arcbest-shipments-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "arcbest-tracking-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "arcbest-api.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'Shipments' spans 2 source specs (arcbest-api.yaml, arcbest-shipments-api-openapi.yml): per-path servers applied",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "arcbest-pickups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arcbest-rates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arcbest-tracking-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

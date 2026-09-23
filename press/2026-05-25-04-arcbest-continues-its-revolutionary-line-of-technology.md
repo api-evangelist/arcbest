@@ -1,7 +1,9 @@
 ---
 title: ArcBest Continues its Revolutionary Line of Technology ...
 url: https://armoneyandpolitics.com/arcbest-technology/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"ArcBest" press release artificial intelligence'
 position: 4
 source: serpapi-google

@@ -89,17 +89,6 @@ components:
           type: string
           description: Facility closing time (HH:MM)
           example: '17:00'
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
     PickupConfirmation:
       type: object
       properties:
@@ -120,6 +109,17 @@ components:
           - CONFIRMED
           - CANCELLED
           example: SCHEDULED
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
   securitySchemes:
     bearerAuth:
       type: http
