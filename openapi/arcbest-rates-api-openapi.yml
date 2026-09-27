@@ -73,68 +73,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    RateResponse:
-      type: object
-      properties:
-        quoteNumber:
-          type: string
-          description: Quote reference number
-          example: Q-20260419-001
-        totalCharge:
-          type: number
-          description: Total freight charge in USD
-          example: 425.5
-        transitDays:
-          type: integer
-          description: Estimated transit days
-          example: 3
-        serviceLevel:
-          type: string
-          description: Service level
-          example: STANDARD
-        expiresAt:
-          type: string
-          format: date-time
-          description: Quote expiration timestamp
-          example: '2026-04-26T23:59:59Z'
-    Address:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Company or person name
-          example: ACME Corp
-        address:
-          type: string
-          description: Street address
-          example: 123 Main St
-        city:
-          type: string
-          description: City
-          example: Benton
-        state:
-          type: string
-          description: State abbreviation
-          example: AR
-        zip:
-          type: string
-          description: ZIP code
-          example: '72015'
-        country:
-          type: string
-          description: Country code (ISO 3166-1 alpha-2)
-          example: US
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
     FreightItem:
       type: object
       properties:
@@ -166,6 +104,33 @@ components:
           type: number
           description: Height in inches
           example: 36.0
+    Address:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Company or person name
+          example: ACME Corp
+        address:
+          type: string
+          description: Street address
+          example: 123 Main St
+        city:
+          type: string
+          description: City
+          example: Benton
+        state:
+          type: string
+          description: State abbreviation
+          example: AR
+        zip:
+          type: string
+          description: ZIP code
+          example: '72015'
+        country:
+          type: string
+          description: Country code (ISO 3166-1 alpha-2)
+          example: US
     RateRequest:
       type: object
       required:
@@ -189,6 +154,41 @@ components:
           - EXPEDITED
           - GUARANTEED
           example: STANDARD
+    RateResponse:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: Quote reference number
+          example: Q-20260419-001
+        totalCharge:
+          type: number
+          description: Total freight charge in USD
+          example: 425.5
+        transitDays:
+          type: integer
+          description: Estimated transit days
+          example: 3
+        serviceLevel:
+          type: string
+          description: Service level
+          example: STANDARD
+        expiresAt:
+          type: string
+          format: date-time
+          description: Quote expiration timestamp
+          example: '2026-04-26T23:59:59Z'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
   securitySchemes:
     bearerAuth:
       type: http

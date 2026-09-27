@@ -66,29 +66,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    PickupRequest:
-      type: object
-      required:
-      - proNumber
-      - pickupDate
-      properties:
-        proNumber:
-          type: string
-          description: PRO number for the shipment
-          example: PRO-123456789
-        pickupDate:
-          type: string
-          format: date
-          description: Requested pickup date
-          example: '2026-04-20'
-        readyTime:
-          type: string
-          description: Time freight will be ready (HH:MM)
-          example: 09:00
-        closeTime:
-          type: string
-          description: Facility closing time (HH:MM)
-          example: '17:00'
     PickupConfirmation:
       type: object
       properties:
@@ -120,6 +97,29 @@ components:
           type: integer
           description: Error code
           example: 401
+    PickupRequest:
+      type: object
+      required:
+      - proNumber
+      - pickupDate
+      properties:
+        proNumber:
+          type: string
+          description: PRO number for the shipment
+          example: PRO-123456789
+        pickupDate:
+          type: string
+          format: date
+          description: Requested pickup date
+          example: '2026-04-20'
+        readyTime:
+          type: string
+          description: Time freight will be ready (HH:MM)
+          example: 09:00
+        closeTime:
+          type: string
+          description: Facility closing time (HH:MM)
+          example: '17:00'
   securitySchemes:
     bearerAuth:
       type: http
