@@ -70,6 +70,33 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
+    TrackingEvent:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Event timestamp
+          example: '2026-04-19T08:00:00Z'
+        description:
+          type: string
+          description: Event description
+          example: Shipment picked up
+        location:
+          type: string
+          description: Event location
+          example: Benton, AR
     TrackingStatus:
       type: object
       properties:
@@ -101,33 +128,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TrackingEvent'
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
-    TrackingEvent:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date-time
-          description: Event timestamp
-          example: '2026-04-19T08:00:00Z'
-        description:
-          type: string
-          description: Event description
-          example: Shipment picked up
-        location:
-          type: string
-          description: Event location
-          example: Benton, AR
   securitySchemes:
     bearerAuth:
       type: http

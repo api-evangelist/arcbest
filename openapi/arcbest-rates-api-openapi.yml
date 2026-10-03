@@ -73,6 +73,67 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Address:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Company or person name
+          example: ACME Corp
+        address:
+          type: string
+          description: Street address
+          example: 123 Main St
+        city:
+          type: string
+          description: City
+          example: Benton
+        state:
+          type: string
+          description: State abbreviation
+          example: AR
+        zip:
+          type: string
+          description: ZIP code
+          example: '72015'
+        country:
+          type: string
+          description: Country code (ISO 3166-1 alpha-2)
+          example: US
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
+    RateRequest:
+      type: object
+      required:
+      - origin
+      - destination
+      - items
+      properties:
+        origin:
+          $ref: '#/components/schemas/Address'
+        destination:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreightItem'
+        serviceType:
+          type: string
+          description: Requested service type
+          enum:
+          - STANDARD
+          - EXPEDITED
+          - GUARANTEED
+          example: STANDARD
     FreightItem:
       type: object
       properties:
@@ -104,56 +165,6 @@ components:
           type: number
           description: Height in inches
           example: 36.0
-    Address:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Company or person name
-          example: ACME Corp
-        address:
-          type: string
-          description: Street address
-          example: 123 Main St
-        city:
-          type: string
-          description: City
-          example: Benton
-        state:
-          type: string
-          description: State abbreviation
-          example: AR
-        zip:
-          type: string
-          description: ZIP code
-          example: '72015'
-        country:
-          type: string
-          description: Country code (ISO 3166-1 alpha-2)
-          example: US
-    RateRequest:
-      type: object
-      required:
-      - origin
-      - destination
-      - items
-      properties:
-        origin:
-          $ref: '#/components/schemas/Address'
-        destination:
-          $ref: '#/components/schemas/Address'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FreightItem'
-        serviceType:
-          type: string
-          description: Requested service type
-          enum:
-          - STANDARD
-          - EXPEDITED
-          - GUARANTEED
-          example: STANDARD
     RateResponse:
       type: object
       properties:
@@ -178,17 +189,6 @@ components:
           format: date-time
           description: Quote expiration timestamp
           example: '2026-04-26T23:59:59Z'
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
   securitySchemes:
     bearerAuth:
       type: http
