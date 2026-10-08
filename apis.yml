@@ -242,6 +242,8 @@ apis:
   - type: Webhooks
     url: asyncapi/arcbest-track-and-trace-webhooks.yml
 common:
+  - type: FinOps
+    url: finops/arcbest-finops.yml
   - type: Overlay
     url: overlays/arcbest-expedite-customer-api-overlay.yaml
   - type: Overlay
