@@ -66,6 +66,26 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    PickupConfirmation:
+      type: object
+      properties:
+        confirmationNumber:
+          type: string
+          description: Pickup confirmation number
+          example: PU-20260420-001
+        pickupDate:
+          type: string
+          format: date
+          description: Confirmed pickup date
+          example: '2026-04-20'
+        status:
+          type: string
+          description: Pickup status
+          enum:
+          - SCHEDULED
+          - CONFIRMED
+          - CANCELLED
+          example: SCHEDULED
     PickupRequest:
       type: object
       required:
@@ -100,26 +120,6 @@ components:
           type: integer
           description: Error code
           example: 401
-    PickupConfirmation:
-      type: object
-      properties:
-        confirmationNumber:
-          type: string
-          description: Pickup confirmation number
-          example: PU-20260420-001
-        pickupDate:
-          type: string
-          format: date
-          description: Confirmed pickup date
-          example: '2026-04-20'
-        status:
-          type: string
-          description: Pickup status
-          enum:
-          - SCHEDULED
-          - CONFIRMED
-          - CANCELLED
-          example: SCHEDULED
   securitySchemes:
     bearerAuth:
       type: http

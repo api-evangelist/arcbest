@@ -101,17 +101,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TrackingEvent'
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Unauthorized access
-        code:
-          type: integer
-          description: Error code
-          example: 401
     TrackingEvent:
       type: object
       properties:
@@ -128,6 +117,17 @@ components:
           type: string
           description: Event location
           example: Benton, AR
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Unauthorized access
+        code:
+          type: integer
+          description: Error code
+          example: 401
   securitySchemes:
     bearerAuth:
       type: http
