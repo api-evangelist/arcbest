@@ -1,4 +1,4 @@
-# ArcBest (arcbest)
+# ArcBest
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,103 +64,227 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-ArcBest is a logistics company offering less-than-truckload (LTL) freight, truckload, moving, and supply chain management services. The ArcBest API platform provides integration capabilities for freight rating, booking, tracking, and supply chain visibility.
+ArcBest is a multibillion-dollar freight and logistics provider operating ABF Freight (LTL), Panther Premium Logistics (expedite), MoLo (truckload brokerage) and U-Pack (moving), with managed transportation, warehousing and international forwarding alongside. Its integration surface is published on arcb.com in two forms: REST APIs covering rate quote, volume quote, tracking, document retrieval, transit times, pickup request and Bill of Lading, whose documentation sits behind a customer login; and ANSI X12 EDI, where ArcBest publishes downloadable 204, 210 and 214 mapping specifications openly. The one API surface documented publicly is ArcBest Expedite - a Customer API and a third-party TMS API, each shipped as a downloadable Swagger-Codegen reference with worked JSON examples, live at api.arcb.com with a test environment at test.api.arcb.com.
 
-**URL:** [https://www.arcbest.com/](https://www.arcbest.com/)
+**Areas:** Logistics · Freight · LTL · Supply Chain · Shipping · Transportation · Expedite · Truckload · EDI · Bill of Lading · Rate Quote · Shipment Tracking
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## ArcBest on APIs.io
 
-## Tags:
+Everything profiled for ArcBest is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/arcbest/](https://apis.io/providers/arcbest/)** — or go straight to one of the APIs or properties below.
 
- - Logistics, Freight, LTL, Supply Chain, Shipping, Transportation
+### APIs (9)
 
-## Timestamps
+- [ArcBest Pickups API](https://apis.io/apis/arcbest/arcbest-pickups-api/) — Pickup scheduling and management
+- [ArcBest Rates API](https://apis.io/apis/arcbest/arcbest-rates-api/) — Freight rate quote services
+- [ArcBest Shipments API](https://apis.io/apis/arcbest/arcbest-shipments-api/) — Shipment booking and management
+- [ArcBest Tracking API](https://apis.io/apis/arcbest/arcbest-tracking-api/) — Shipment tracking and visibility
+- [ArcBest Authorize API](https://apis.io/apis/arcbest/arcbest-authorize-api/) — Exchange a ClientId and ClientSecret for a bearer access token.
+- [ArcBest Booking API](https://apis.io/apis/arcbest/arcbest-booking-api/) — Booking requests placed against a quote, and their asynchronous status.
+- [ArcBest Order API](https://apis.io/apis/arcbest/arcbest-order-api/) — Bill of Lading retrieval and reference-number updates on a booked order.
+- [ArcBest Quote API](https://apis.io/apis/arcbest/arcbest-quote-api/) — Rate quote requests for expedite loads.
+- [ArcBest Quotes API](https://apis.io/apis/arcbest/arcbest-quotes-api/) — Submit expedite rate quotes, request bookings against them, and poll booking status.
 
-- **Created:** 2026-03-23
-- **Modified:** 2026-04-19
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### ArcBest API
-The ArcBest API provides programmatic access to freight services including LTL rate quotes, shipment booking, tracking, BOL generation, and supply chain visibility. Access is by invitation only.
+#### AsyncAPI (1)
 
-**Human URL:** [https://www.arcbest.com/](https://www.arcbest.com/)
+Event-driven and webhook contracts.
 
-#### Tags:
+- [Arcbest Track And Trace Webhooks](https://apis.io/asyncapis/arcbest/arcbest-track-and-trace-webhooks/)
 
- - LTL Freight, Rate Quote, Shipment Tracking, BOL, Supply Chain
+#### MCP servers (1)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [Documentation](https://www.arcbest.com/)
-- [OpenAPI](openapi/arcbest-api.yaml)
+- [arcbest-mcp.yml](https://apis.io/servers/arcbest/arcbest-mcp-yml/)
 
-## Common Properties
+#### Agentic access (1)
 
-- [Portal](https://www.arcbest.com/)
-- [SignUp](https://www.arcbest.com/)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Features
+- [Arcbest Agentic Access](https://apis.io/agentic-access/arcbest/arcbest-agentic-access/)
 
-| Name | Description |
-|------|-------------|
-| LTL Rate Quotes | Real-time less-than-truckload freight rate quotes with transit time estimates. |
-| Shipment Booking | API-based shipment booking and scheduling for LTL and truckload freight. |
-| Shipment Tracking | Real-time tracking of freight shipments with status updates and delivery notifications. |
-| BOL Generation | Electronic Bill of Lading generation and management through API integration. |
-| Pickup Scheduling | Automated pickup scheduling and confirmation for outbound freight. |
-| Supply Chain Visibility | End-to-end supply chain visibility across ArcBest freight and logistics services. |
+#### JSON Schema (14)
 
-## Use Cases
+The data models the API reads and writes.
 
-| Name | Description |
-|------|-------------|
-| E-Commerce Shipping | Integrate ArcBest freight rates and booking into e-commerce platforms for automated shipping. |
-| ERP Integration | Connect ArcBest freight services to ERP systems for automated freight procurement and accounting. |
-| TMS Integration | Integrate with Transportation Management Systems for multi-carrier freight optimization. |
-| Warehouse Management | Connect ArcBest pickup scheduling with warehouse management systems for outbound logistics automation. |
+- [Address](https://apis.io/schemas/arcbest/arcbest-api-address/)
+- [ErrorResponse](https://apis.io/schemas/arcbest/arcbest-api-error-response/)
+- [FreightItem](https://apis.io/schemas/arcbest/arcbest-api-freight-item/)
+- [PickupConfirmation](https://apis.io/schemas/arcbest/arcbest-api-pickup-confirmation/)
+- [PickupRequest](https://apis.io/schemas/arcbest/arcbest-api-pickup-request/)
+- [RateRequest](https://apis.io/schemas/arcbest/arcbest-api-rate-request/)
+- [RateResponse](https://apis.io/schemas/arcbest/arcbest-api-rate-response/)
+- [Shipment](https://apis.io/schemas/arcbest/arcbest-api-shipment/)
+- [ShipmentList](https://apis.io/schemas/arcbest/arcbest-api-shipment-list/)
+- [ShipmentRequest](https://apis.io/schemas/arcbest/arcbest-api-shipment-request/)
+- [TrackingEvent](https://apis.io/schemas/arcbest/arcbest-api-tracking-event/)
+- [TrackingStatus](https://apis.io/schemas/arcbest/arcbest-api-tracking-status/)
+- [Arcbest Expedite Quote Request Model](https://apis.io/schemas/arcbest/arcbest-expedite-quote-request-model/)
+- [Arcbest Expedite Quote Response Model](https://apis.io/schemas/arcbest/arcbest-expedite-quote-response-model/)
 
-## Integrations
+#### JSON Structure (12)
 
-| Name | Description |
-|------|-------------|
-| SAP | Integration with SAP ERP for freight cost allocation and logistics management. |
-| Oracle | Connect to Oracle ERP and WMS systems for automated freight operations. |
-| Salesforce | Integrate shipment tracking and freight data with Salesforce CRM. |
-| ShipStation | Multi-carrier shipping management platform integration. |
-| Shopify | E-commerce platform integration for LTL freight rate display and booking. |
+Data models expressed in JSON Structure.
 
-## Artifacts
+- [Arcbest Api Address Structure](https://apis.io/json-structure/arcbest/arcbest-api-address-structure/)
+- [Arcbest Api Error Response Structure](https://apis.io/json-structure/arcbest/arcbest-api-error-response-structure/)
+- [Arcbest Api Freight Item Structure](https://apis.io/json-structure/arcbest/arcbest-api-freight-item-structure/)
+- [Arcbest Api Pickup Confirmation Structure](https://apis.io/json-structure/arcbest/arcbest-api-pickup-confirmation-structure/)
+- [Arcbest Api Pickup Request Structure](https://apis.io/json-structure/arcbest/arcbest-api-pickup-request-structure/)
+- [Arcbest Api Rate Request Structure](https://apis.io/json-structure/arcbest/arcbest-api-rate-request-structure/)
+- [Arcbest Api Rate Response Structure](https://apis.io/json-structure/arcbest/arcbest-api-rate-response-structure/)
+- [Arcbest Api Shipment List Structure](https://apis.io/json-structure/arcbest/arcbest-api-shipment-list-structure/)
+- [Arcbest Api Shipment Request Structure](https://apis.io/json-structure/arcbest/arcbest-api-shipment-request-structure/)
+- [Arcbest Api Shipment Structure](https://apis.io/json-structure/arcbest/arcbest-api-shipment-structure/)
+- [Arcbest Api Tracking Event Structure](https://apis.io/json-structure/arcbest/arcbest-api-tracking-event-structure/)
+- [Arcbest Api Tracking Status Structure](https://apis.io/json-structure/arcbest/arcbest-api-tracking-status-structure/)
 
-Machine-readable API specifications organized by format.
+#### JSON-LD (1)
 
-### OpenAPI
+Linked-data contexts for the provider's vocabulary.
 
-- [ArcBest API](openapi/arcbest-api.yaml)
+- [Arcbest Api Context](https://apis.io/jsonld/arcbest/arcbest-api-context/)
 
-### JSON Schema
+#### Vocabulary (1)
 
-- [Shipment](json-schema/arcbest-api-shipment-schema.json)
-- [Tracking Status](json-schema/arcbest-api-tracking-status-schema.json)
-- [Rate Request](json-schema/arcbest-api-rate-request-schema.json)
-- [Rate Response](json-schema/arcbest-api-rate-response-schema.json)
-- [Address](json-schema/arcbest-api-address-schema.json)
-- [Freight Item](json-schema/arcbest-api-freight-item-schema.json)
+The provider's domain terms, defined.
 
-### JSON-LD
+- [Arcbest Vocabulary](https://apis.io/vocabularies/arcbest/arcbest-vocabulary/)
 
-- [ArcBest API Context](json-ld/arcbest-api-context.jsonld)
+#### Examples (12)
 
-## Vocabulary
+Example requests and responses.
 
-- [ArcBest Vocabulary](vocabulary/arcbest-vocabulary.yaml) — Unified taxonomy mapping 4 resources, 5 actions, 0 workflows, and 3 personas
+- [Arcbest Api Address Example](https://apis.io/examples/arcbest/arcbest-api-address-example/)
+- [Arcbest Api Error Response Example](https://apis.io/examples/arcbest/arcbest-api-error-response-example/)
+- [Arcbest Api Freight Item Example](https://apis.io/examples/arcbest/arcbest-api-freight-item-example/)
+- [Arcbest Api Pickup Confirmation Example](https://apis.io/examples/arcbest/arcbest-api-pickup-confirmation-example/)
+- [Arcbest Api Pickup Request Example](https://apis.io/examples/arcbest/arcbest-api-pickup-request-example/)
+- [Arcbest Api Rate Request Example](https://apis.io/examples/arcbest/arcbest-api-rate-request-example/)
+- [Arcbest Api Rate Response Example](https://apis.io/examples/arcbest/arcbest-api-rate-response-example/)
+- [Arcbest Api Shipment Example](https://apis.io/examples/arcbest/arcbest-api-shipment-example/)
+- [Arcbest Api Shipment List Example](https://apis.io/examples/arcbest/arcbest-api-shipment-list-example/)
+- [Arcbest Api Shipment Request Example](https://apis.io/examples/arcbest/arcbest-api-shipment-request-example/)
+- [Arcbest Api Tracking Event Example](https://apis.io/examples/arcbest/arcbest-api-tracking-event-example/)
+- [Arcbest Api Tracking Status Example](https://apis.io/examples/arcbest/arcbest-api-tracking-status-example/)
 
-## Rules
+#### Collections (4)
 
-- [ArcBest Spectral Rules](rules/arcbest-spectral-rules.yml) — 18 rules across 8 categories enforcing ArcBest API conventions
+Postman and Open Collection request collections.
 
-## Maintainers
+- [ArcBest Pickups API](https://apis.io/collections/arcbest/open-arcbest-pickups-api/)
+- [ArcBest Pickups Rates API](https://apis.io/collections/arcbest/open-arcbest-rates-api/)
+- [ArcBest Pickups Shipments API](https://apis.io/collections/arcbest/open-arcbest-shipments-api/)
+- [ArcBest Pickups Tracking API](https://apis.io/collections/arcbest/open-arcbest-tracking-api/)
 
-**FN:** Kin Lane
+#### Overlays (2)
 
-**Email:** kin@apievangelist.com
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Arcbest Expedite Customer Api Overlay](https://apis.io/overlays/arcbest/arcbest-expedite-customer-api-overlay/)
+- [Arcbest Expedite Tms Api Overlay](https://apis.io/overlays/arcbest/arcbest-expedite-tms-api-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [ArcBest — jsonschema rules](https://apis.io/rules/arcbest/arcbest-jsonschema-spectral-rules/)
+- [ArcBest API Rules](https://apis.io/rules/arcbest/arcbest-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Arcbest Authentication](https://apis.io/security/arcbest/arcbest-authentication/)
+- [Arcbest Domain Security](https://apis.io/security/arcbest/arcbest-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Arcbest Plans Pricing](https://apis.io/plans/arcbest/arcbest-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Arcbest Rate Limits](https://apis.io/rate-limits/arcbest/arcbest-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Arcbest Finops](https://apis.io/finops/arcbest/arcbest-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://arcb.com/)
+- [Documentation](https://arcb.com/technology/shippers/API)
+- [Getting started](https://arcb.com/technology/shippers/API/expedite-setup-documentation-download)
+- [API reference](https://arcb.com/technology/shippers/API/expedite-setup-documentation-download)
+- [Sign up](https://arcb.com/registration/customer)
+- [Support](https://support.arcb.com/en)
+- [Blog](https://arcb.com/blog)
+- [Terms of service](https://arcb.com/terms-of-use)
+- [Privacy policy](https://arcb.com/privacy-policy)
+- [GitHub](https://github.com/ArcBest-Technologies)
+
+## API Evangelist rating
+
+**Kin Score 42.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 29.1 |
+| Contract governance | 45.5 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 34.2 |
+
+**Agent readiness 34.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/arcbest/](https://apis.io/providers/arcbest/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for ArcBest: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/arcbest/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
