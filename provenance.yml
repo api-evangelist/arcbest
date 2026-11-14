@@ -5,12 +5,21 @@ artifacts:
   agentic-access/arcbest-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/arcbest-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   asyncapi/arcbest-track-and-trace-webhooks.yml:
     method: searched
     evidence: declared in the artifact
   authentication/arcbest-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   collections/arcbest-pickups-api.opencollection.json:
     method: derived
     evidence: openapi/arcbest-pickups-api
@@ -41,6 +50,9 @@ artifacts:
   conventions/arcbest-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/arcbest-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/arcbest-data-model.yml:
     method: derived
     evidence: declared in the artifact
@@ -56,6 +68,9 @@ artifacts:
   docs/arcbest-expedite-tms-quote-book-instructions-2024-08.pdf:
     method: unknown
     evidence: no authorship recorded
+  eligibility/arcbest-eligibility.yml:
+    method: harvested
+    evidence: declared in the artifact
   errors/arcbest-problem-types.yml:
     method: searched
     evidence: declared in the artifact
@@ -102,6 +117,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-06.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
   integrations/_index.yml:
@@ -197,7 +218,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -266,6 +287,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/arcbest-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -329,6 +353,9 @@ artifacts:
   press/2026-05-25-05-arcbest-highlights-strategic-pillars-and-long-term.md:
     method: unknown
     evidence: no authorship recorded
+  privacy/arcbest-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/arcbest-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -370,6 +397,9 @@ artifacts:
     evidence: declared in the artifact
   skills/arcbest-track-expedite-shipment.md:
     method: generated
+    evidence: declared in the artifact
+  terms/arcbest-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vocabulary/arcbest-vocabulary.yaml:
     method: unknown
